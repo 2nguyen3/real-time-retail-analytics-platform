@@ -51,7 +51,7 @@ flowchart LR
 - **Course:** Cloud Computing
 - **Course Code:** IS402
 - **University:** University of Information Technology – VNU-HCM
-- **Instructor:** Hà Lê Hoài Trung
+- **Instructor:** ThS. Hà Lê Hoài Trung
 - **Email:** [trunghlh@uit.edu.vn](mailto:trunghlh@uit.edu.vn)
 
 ## Team Members
