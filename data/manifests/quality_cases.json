@@ -1,0 +1,65 @@
+{
+  "audited_at_utc": "2026-11-15T17:08:32Z",
+  "currencies": [
+    "USD"
+  ],
+  "duplicate_count": 1,
+  "expected_by_hour_utc": {
+    "2024-01-01T00:00:00Z": {
+      "quantity": 3,
+      "revenue": "5.00"
+    },
+    "2024-01-01T01:00:00Z": {
+      "quantity": 3,
+      "revenue": "1.50"
+    }
+  },
+  "expected_by_product": {
+    "P00001": {
+      "quantity": 5,
+      "revenue": "4.50"
+    },
+    "P00002": {
+      "quantity": 1,
+      "revenue": "2.00"
+    }
+  },
+  "expected_by_store": {
+    "S001": {
+      "quantity": 3,
+      "revenue": "5.00"
+    },
+    "S002": {
+      "quantity": 3,
+      "revenue": "1.50"
+    }
+  },
+  "expected_quantity": 6,
+  "expected_revenue": "6.50",
+  "file_modified_at_utc": "2026-11-15T17:05:12Z",
+  "generated_at_utc": "2026-11-15T17:05:12Z",
+  "input_file": "tests/fixtures/quality_cases.jsonl",
+  "invalid_count": 4,
+  "invalid_reasons": {
+    "event_time": 1,
+    "missing_field": 1,
+    "price": 1,
+    "quantity": 1
+  },
+  "json_payload_bytes": 3524,
+  "manifest_version": "1.0.0",
+  "message_count": 8,
+  "policy": "invalid-first; only accepted transaction_id duplicates; no late-event filtering",
+  "raw_file_bytes": 3532,
+  "run_id": "fixture_001",
+  "schema_version": [
+    "1.0.0"
+  ],
+  "seed": 0,
+  "sha256": "c07af5be7d0d778ff29d10d2ad08e08c31d026e6989dff95027bc61e5d19fb94",
+  "source_types": [
+    "synthetic"
+  ],
+  "unique_transaction_id_count": 7,
+  "valid_count": 3
+}

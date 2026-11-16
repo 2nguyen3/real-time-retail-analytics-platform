@@ -1,0 +1,43 @@
+# Nguồn dữ liệu Giai đoạn 02
+
+## So sánh hai bộ chính thức
+
+| Bộ dữ liệu | Điều nhà cung cấp xác nhận | Phù hợp đồ án | Giới hạn hiện tại |
+|---|---|---|---|
+| [The Complete Journey](https://www.dunnhumby.com/source-files/) | Giao dịch của khoảng 2.500 hộ trong hai năm; dunnhumby hướng tới bài tập nâng cao và nghiên cứu. | Có lịch sử mua hàng, khách hàng và tiếp thị. | Trang nguồn không nêu byte riêng hoặc schema CSV; nhóm chưa tải file để kiểm cột. |
+| [Let's Get Sort-of-Real](https://www.dunnhumby.com/source-files/) | **Dữ liệu mô phỏng**, có quy luật giống giao dịch bán lẻ: 117 tuần, khoảng 300 triệu dòng sản phẩm, 47 triệu baskets; 9 phần tải. [User Guide](https://assets.ctfassets.net/psj0p18eh7z1/2SYO8T89Pxfd65nr6HQEbR/ce6c475e1bf15d503141bbd1fcc3b0a2/Let_s-Get-Sort-of-Real-User-Guide-dunnhumby.pdf) nêu 4,12 GB nén và 40,7 GB giải nén. | Có sample 2.000 baskets, dòng sản phẩm, `quantity`, `spend`, sản phẩm, khách, cửa hàng, vùng; thuận tiện kiểm ETL và chuẩn bị benchmark Azure. | Quyền biến đổi/chia sẻ cần xác nhận; sample chính thức có lỗi làm mất ID basket chi tiết. Múi giờ và đơn vị tiền tệ chưa được hướng dẫn xác nhận. |
+
+**Đề xuất có điều kiện:** chọn **Let's Get Sort-of-Real** làm nguồn chính cho bài toán dòng sản phẩm và thiết kế benchmark, vì có sample nhỏ và quy mô lớn được chính nhà cung cấp mô tả. Đây là dữ liệu **dummy/simulated do dunnhumby công bố**, không phải giao dịch khách hàng thật và không phải dữ liệu synthetic do nhóm tự sinh. Việc dùng trên Azure, biến đổi và công bố artifact vẫn **PENDING xác nhận quyền**. Bản `completejourney` của 84.51° là một bộ một năm khác; không gộp số liệu hoặc giấy phép của nó với hai bộ dunnhumby trên.
+
+## Sample chính thức đã kiểm trực tiếp
+
+- URL trên trang nguồn trỏ tới [ZIP Sample 2K baskets](https://assets.ctfassets.net/psj0p18eh7z1/3uiNHeTTjkQBiZ18vtxaH9/0015bb8a1aaf014c96c6d3cd4183bd7c/dunnhumby_Let-s-Get-Sort-of-Real-_Sample-2K-baskets_.zip). Metadata trang và HTTP HEAD đều báo **162.979 byte**; file tải được cũng đúng số byte này. SHA-256 ZIP: `b0af7cfec179d994195ca1c6ec05d3f916fa9707704b61f8529b19324ccc28cd`.
+- File được giữ tại `data/raw/dunnhumby_sort_of_real_sample_2k.zip`, **Git ignore**. ZIP có `time.csv` (142 dòng) và hai file CSV giao dịch: `transactions_200626.csv` (6.257 dòng), `transactions_200627.csv` (6.648 dòng). Tổng **12.905 dòng sản phẩm**, ngày từ **2006-08-21 đến 2006-09-03**, đúng 14 ngày.
+- Header CSV giao dịch thực tế: `SHOP_WEEK, SHOP_DATE, SHOP_WEEKDAY, SHOP_HOUR, QUANTITY, SPEND, PROD_CODE, PROD_CODE_10, PROD_CODE_20, PROD_CODE_30, PROD_CODE_40, CUST_CODE, seg_1, seg_2, BASKET_ID, BASKET_SIZE, BASKET_PRICE_SENSITIVITY, BASKET_TYPE, BASKET_DOMINANT_MISSION, STORE_CODE, STORE_FORMAT, STORE_REGION`. File `time.csv`: `shop_week, date_from, date_to`.
+- Kiểm trực tiếp: `QUANTITY` từ 1 đến 34, không có dòng `<=0`; `SPEND` từ `0.01` đến `59.62`, không âm; tổng `SPEND` theo `Decimal` là **23.809,25 đơn vị nguồn**. Có 3.101 `PROD_CODE`, 657 `STORE_CODE`. `CUST_CODE` trống **2.770** dòng; `seg_1` trống 2.770 và `seg_2` trống 4.102 dòng. `SHOP_DATE` đều parse được; `SHOP_HOUR` từ 8 đến 21.
+- **Giới hạn nằm trong ZIP nguồn:** đọc CSV bằng `csv.DictReader` với mọi cột là **chuỗi**, rồi kiểm byte gốc, cho thấy file tuần `200626` có 6.257 dòng đều chứa literal `9.94E+14`; tuần `200627` có 6.648 dòng đều chứa literal `9.94102E+14`. Toàn sample chỉ có **hai chuỗi `BASKET_ID` phân biệt** trước khi gọi converter. Đây không phải lỗi parser hoặc phép chuyển đổi; chữ số hóa đơn gốc đã thiếu trong artifact CSV, không thể khôi phục 2.000 basket. Không được coi các dòng cùng chuỗi này là cùng hóa đơn, tính số hóa đơn từ chúng hoặc dùng chúng để loại trùng. Converter ghi `basket_id=null` cho cả 12.905 dòng và giữ `transaction_id` riêng cho mỗi dòng. Phân tích basket chờ file có ID nguyên vẹn.
+- Để đối chiếu, [Data Sample chính thức](https://assets.ctfassets.net/psj0p18eh7z1/6hMvgZ3fymZ3AjcBEl5VOs/9ea7a5015586e348477d70b5d79d0127/dunnhumby_Let-s-Get-Sort-of-Real-_Data-Sample___1_.zip) có **22.437 byte**, SHA-256 `987dd581cc81de20b430a3c43ed75a4cd41cb550b55cb31944b3331f0d9223ab`, chứa XLSX 119 dòng dữ liệu. Kiểm XML của workbook thấy **19 basket ID nguyên đầy đủ** trên 119 dòng, nhưng 12 ô `SPEND` có biểu diễn thập phân dư từ Excel (ví dụ `0.28000000000000003`). File này hỗ trợ xác nhận ý nghĩa `BASKET_ID`, không sửa được CSV 2K và chưa được converter dùng. ZIP được giữ trong `data/raw/` và Git ignore.
+
+## Quy tắc chuyển đổi đã chạy
+
+`producer/convert_dunnhumby.py` đọc từng file CSV **trong ZIP**, không giải nén toàn bộ. Mỗi dòng nguồn thành một message. `transaction_id` gồm SHA-256 ZIP, tên file tuần và số dòng vật lý; do đó 12.905 dòng có 12.905 ID khác nhau. `product_id ← PROD_CODE`, `store_id ← STORE_CODE`, `store_region ← STORE_REGION`, `category_id ← PROD_CODE_40`, `quantity ← QUANTITY`, `customer_id ← CUST_CODE` hoặc `null` nếu không có loyalty card. `basket_id` chỉ giữ khi nguồn chứa chuỗi integer đầy đủ; với sample này tất cả là `null`.
+
+`line_revenue` lấy nguyên giá trị `SPEND` theo `Decimal` và chuẩn hóa hai chữ số sau dấu thập phân. `price = SPEND / QUANTITY` làm tròn 8 chữ số; converter kiểm lại `price × quantity` về cents phải bằng `SPEND`, nếu không thì dừng. **`line_revenue` là số doanh thu chuẩn.** Flink/PostgreSQL ở các giai đoạn sau phải `SUM(CAST(line_revenue AS DECIMAL(...,2)))` sau lọc và dedup theo `transaction_id`, không thay bằng `SUM(quantity * price)`; `basket_id` không được dùng để dedup. `currency=XXX` nghĩa là **đơn vị tiền tệ nguồn chưa xác minh**, không khẳng định USD/GBP/VND. Chỉ đổi mã sau khi có tài liệu xác nhận.
+
+Nguồn chỉ có `SHOP_DATE` và `SHOP_HOUR` (khung giờ), không có phút/giây hoặc timezone. `event_time` là **đầu khung giờ UTC sau khi áp dụng offset do người chạy khai báo**, `event_time_precision=hour`, `event_time_basis=assumed_timezone`; đây không phải thời điểm thanh toán chính xác. Lượt chạy GĐ02 dùng `--source-utc-offset +00:00` **để kiểm kỹ thuật**, không xác nhận nguồn là UTC. `emitted_at=null` vì chưa phát Kafka. JSONL chuyển đổi nằm ở `data/generated/` và được Git ignore.
+
+Lệnh chạy lại (chọn đường dẫn output mới; script không ghi đè):
+
+```bash
+.venv/bin/python producer/convert_dunnhumby.py --input data/raw/dunnhumby_sort_of_real_sample_2k.zip --output data/generated/sort_of_real_2k_new.jsonl --run-id sor_sample_2k_new --source-utc-offset +00:00
+```
+
+Đối soát độc lập đọc CSV nguồn và JSONL **theo từng dòng** và tổng: **12.905 dòng, quantity 19.112, doanh thu 23.809,25** khớp ở cả hai bên; auditor báo 12.905 valid, 0 invalid/duplicate. Output thử có **7.529.412 byte**, SHA-256 `0154f86cc9caf5c0c7fad087589b2197ee76b065ec14f028582686934bdf40f4`. Kết quả này xác minh kỹ thuật chuyển đổi sample, **không** xác minh đúng timezone, mã tiền hoặc basket.
+
+## Quyền sử dụng và benchmark Azure
+
+[Trang Source Files](https://www.dunnhumby.com/source-files/) nêu mục đích bài tập lớp, nghiên cứu và thử thuật toán. [Điều khoản website dunnhumby](https://www.dunnhumby.com/terms-and-conditions/) chỉ nêu rõ quyền tải một bản **tài liệu/hình ảnh** cho nghiên cứu, cá nhân hoặc phi thương mại với điều kiện không sửa; các quyền khác được giữ lại. User Guide ghi bảo lưu quyền. Không suy rộng quyền đối với tài liệu/hình ảnh thành giấy phép biến đổi, lưu cloud hay công bố **dataset**. Chưa tìm thấy giấy phép dataset cho phép công bố ZIP/CSV/JSONL chuyển đổi trong GitHub. Vì vậy **không commit raw hoặc transformed data**, và cần hỏi dunnhumby/giảng viên về việc biến đổi, lưu trên Azure, trình diễn và chia sẻ báo cáo trước khi triển khai cloud.
+
+Chín phần đầy đủ được nhà cung cấp mô tả khoảng 450–500 MB nén mỗi phần, mỗi phần chứa khoảng 13 tuần; **chưa tải phần nào**. Trang web làm tròn thành **4,3 GB**, còn User Guide ghi **4,12 GB** nén; đây là số công bố, chưa phải byte đã đo. Benchmark R03 sẽ đo byte thật của file được cấp phép sau khi chuyển lên Azure Blob, throughput đọc/giải nén và số dòng Flink thực xử lý. Nếu rubric dùng ngưỡng 4 GiB thì 4,12 GB thập phân có thể thấp hơn ngưỡng, còn dữ liệu giải nén được công bố 40,7 GB. Không dùng sample hoặc synthetic GĐ02 để nhận đã benchmark >4 GB.
+
+**Nghiệm thu GĐ02:** phần kỹ thuật và chuyển đổi **PASS trong phạm vi dữ liệu dòng sản phẩm** sau khi chạy lại test, schema, generator, adapter, auditor và đối soát. Có thể chốt GĐ02 với giới hạn basket nêu trên; không công bố số hóa đơn từ sample CSV. **PENDING ngoài gate GĐ02:** xác nhận quyền lưu/biến đổi trên Azure và công bố trước GĐ08–10; lấy ID basket nguyên vẹn trước khi làm báo cáo hóa đơn; xác minh timezone, mã tiền và byte dữ liệu lớn trước các phép đo liên quan. GĐ01 Power BI/Azure quota vẫn PENDING riêng; các kiểm thử GĐ10–11 không được coi là đã hoàn thành.

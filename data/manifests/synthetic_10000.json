@@ -1,0 +1,600 @@
+{
+  "audited_at_utc": "2026-11-15T17:08:32Z",
+  "currencies": [
+    "USD"
+  ],
+  "duplicate_count": 0,
+  "expected_by_hour_utc": {
+    "2024-01-01T00:00:00Z": {
+      "quantity": 558,
+      "revenue": "62320.11"
+    },
+    "2024-01-01T01:00:00Z": {
+      "quantity": 557,
+      "revenue": "57958.82"
+    },
+    "2024-01-01T02:00:00Z": {
+      "quantity": 537,
+      "revenue": "54201.40"
+    },
+    "2024-01-01T03:00:00Z": {
+      "quantity": 522,
+      "revenue": "50021.74"
+    },
+    "2024-01-01T04:00:00Z": {
+      "quantity": 530,
+      "revenue": "55227.84"
+    },
+    "2024-01-01T05:00:00Z": {
+      "quantity": 528,
+      "revenue": "54329.99"
+    },
+    "2024-01-01T06:00:00Z": {
+      "quantity": 530,
+      "revenue": "51687.17"
+    },
+    "2024-01-01T07:00:00Z": {
+      "quantity": 542,
+      "revenue": "50937.86"
+    },
+    "2024-01-01T08:00:00Z": {
+      "quantity": 538,
+      "revenue": "55661.64"
+    },
+    "2024-01-01T09:00:00Z": {
+      "quantity": 515,
+      "revenue": "52711.86"
+    },
+    "2024-01-01T10:00:00Z": {
+      "quantity": 525,
+      "revenue": "53283.06"
+    },
+    "2024-01-01T11:00:00Z": {
+      "quantity": 554,
+      "revenue": "49464.60"
+    },
+    "2024-01-01T12:00:00Z": {
+      "quantity": 552,
+      "revenue": "52756.73"
+    },
+    "2024-01-01T13:00:00Z": {
+      "quantity": 509,
+      "revenue": "49333.71"
+    },
+    "2024-01-01T14:00:00Z": {
+      "quantity": 531,
+      "revenue": "54710.62"
+    },
+    "2024-01-01T15:00:00Z": {
+      "quantity": 557,
+      "revenue": "53904.06"
+    },
+    "2024-01-01T16:00:00Z": {
+      "quantity": 557,
+      "revenue": "50211.22"
+    },
+    "2024-01-01T17:00:00Z": {
+      "quantity": 547,
+      "revenue": "55240.73"
+    },
+    "2024-01-01T18:00:00Z": {
+      "quantity": 519,
+      "revenue": "48020.61"
+    },
+    "2024-01-01T19:00:00Z": {
+      "quantity": 560,
+      "revenue": "54247.58"
+    },
+    "2024-01-01T20:00:00Z": {
+      "quantity": 546,
+      "revenue": "53329.94"
+    },
+    "2024-01-01T21:00:00Z": {
+      "quantity": 577,
+      "revenue": "59438.72"
+    },
+    "2024-01-01T22:00:00Z": {
+      "quantity": 557,
+      "revenue": "55941.30"
+    },
+    "2024-01-01T23:00:00Z": {
+      "quantity": 517,
+      "revenue": "56634.84"
+    },
+    "2024-01-02T00:00:00Z": {
+      "quantity": 556,
+      "revenue": "53927.19"
+    },
+    "2024-01-02T01:00:00Z": {
+      "quantity": 526,
+      "revenue": "47568.16"
+    },
+    "2024-01-02T02:00:00Z": {
+      "quantity": 542,
+      "revenue": "52514.71"
+    },
+    "2024-01-02T03:00:00Z": {
+      "quantity": 532,
+      "revenue": "51023.87"
+    },
+    "2024-01-02T04:00:00Z": {
+      "quantity": 550,
+      "revenue": "51507.83"
+    },
+    "2024-01-02T05:00:00Z": {
+      "quantity": 536,
+      "revenue": "55493.59"
+    },
+    "2024-01-02T06:00:00Z": {
+      "quantity": 531,
+      "revenue": "55587.09"
+    },
+    "2024-01-02T07:00:00Z": {
+      "quantity": 543,
+      "revenue": "55284.39"
+    },
+    "2024-01-02T08:00:00Z": {
+      "quantity": 539,
+      "revenue": "57402.40"
+    },
+    "2024-01-02T09:00:00Z": {
+      "quantity": 553,
+      "revenue": "55950.65"
+    },
+    "2024-01-02T10:00:00Z": {
+      "quantity": 574,
+      "revenue": "48623.27"
+    },
+    "2024-01-02T11:00:00Z": {
+      "quantity": 580,
+      "revenue": "55119.82"
+    },
+    "2024-01-02T12:00:00Z": {
+      "quantity": 517,
+      "revenue": "49573.95"
+    },
+    "2024-01-02T13:00:00Z": {
+      "quantity": 526,
+      "revenue": "55982.74"
+    },
+    "2024-01-02T14:00:00Z": {
+      "quantity": 561,
+      "revenue": "59737.41"
+    },
+    "2024-01-02T15:00:00Z": {
+      "quantity": 537,
+      "revenue": "53369.00"
+    },
+    "2024-01-02T16:00:00Z": {
+      "quantity": 518,
+      "revenue": "50866.33"
+    },
+    "2024-01-02T17:00:00Z": {
+      "quantity": 504,
+      "revenue": "54537.08"
+    },
+    "2024-01-02T18:00:00Z": {
+      "quantity": 516,
+      "revenue": "47955.92"
+    },
+    "2024-01-02T19:00:00Z": {
+      "quantity": 537,
+      "revenue": "56889.41"
+    },
+    "2024-01-02T20:00:00Z": {
+      "quantity": 505,
+      "revenue": "50912.96"
+    },
+    "2024-01-02T21:00:00Z": {
+      "quantity": 540,
+      "revenue": "55166.70"
+    },
+    "2024-01-02T22:00:00Z": {
+      "quantity": 496,
+      "revenue": "47230.13"
+    },
+    "2024-01-02T23:00:00Z": {
+      "quantity": 547,
+      "revenue": "59405.28"
+    },
+    "2024-01-03T00:00:00Z": {
+      "quantity": 533,
+      "revenue": "58445.18"
+    },
+    "2024-01-03T01:00:00Z": {
+      "quantity": 547,
+      "revenue": "58449.95"
+    },
+    "2024-01-03T02:00:00Z": {
+      "quantity": 517,
+      "revenue": "49239.03"
+    },
+    "2024-01-03T03:00:00Z": {
+      "quantity": 533,
+      "revenue": "50525.73"
+    },
+    "2024-01-03T04:00:00Z": {
+      "quantity": 518,
+      "revenue": "50789.09"
+    },
+    "2024-01-03T05:00:00Z": {
+      "quantity": 540,
+      "revenue": "57966.30"
+    },
+    "2024-01-03T06:00:00Z": {
+      "quantity": 545,
+      "revenue": "53558.14"
+    },
+    "2024-01-03T07:00:00Z": {
+      "quantity": 303,
+      "revenue": "31593.55"
+    }
+  },
+  "expected_by_product": {
+    "P00001": {
+      "quantity": 305,
+      "revenue": "26425.94"
+    },
+    "P00002": {
+      "quantity": 361,
+      "revenue": "36641.76"
+    },
+    "P00003": {
+      "quantity": 423,
+      "revenue": "41510.55"
+    },
+    "P00004": {
+      "quantity": 393,
+      "revenue": "34744.42"
+    },
+    "P00005": {
+      "quantity": 397,
+      "revenue": "40565.42"
+    },
+    "P00006": {
+      "quantity": 402,
+      "revenue": "36551.24"
+    },
+    "P00007": {
+      "quantity": 369,
+      "revenue": "35680.50"
+    },
+    "P00008": {
+      "quantity": 302,
+      "revenue": "29948.99"
+    },
+    "P00009": {
+      "quantity": 329,
+      "revenue": "32494.11"
+    },
+    "P00010": {
+      "quantity": 381,
+      "revenue": "36665.82"
+    },
+    "P00011": {
+      "quantity": 333,
+      "revenue": "31300.90"
+    },
+    "P00012": {
+      "quantity": 377,
+      "revenue": "39947.40"
+    },
+    "P00013": {
+      "quantity": 340,
+      "revenue": "33940.44"
+    },
+    "P00014": {
+      "quantity": 399,
+      "revenue": "41596.42"
+    },
+    "P00015": {
+      "quantity": 424,
+      "revenue": "39885.45"
+    },
+    "P00016": {
+      "quantity": 448,
+      "revenue": "50277.88"
+    },
+    "P00017": {
+      "quantity": 419,
+      "revenue": "42782.86"
+    },
+    "P00018": {
+      "quantity": 394,
+      "revenue": "37555.47"
+    },
+    "P00019": {
+      "quantity": 420,
+      "revenue": "44651.57"
+    },
+    "P00020": {
+      "quantity": 433,
+      "revenue": "41541.65"
+    },
+    "P00021": {
+      "quantity": 320,
+      "revenue": "32107.69"
+    },
+    "P00022": {
+      "quantity": 303,
+      "revenue": "26698.20"
+    },
+    "P00023": {
+      "quantity": 375,
+      "revenue": "32450.81"
+    },
+    "P00024": {
+      "quantity": 323,
+      "revenue": "33557.93"
+    },
+    "P00025": {
+      "quantity": 395,
+      "revenue": "38548.13"
+    },
+    "P00026": {
+      "quantity": 447,
+      "revenue": "42812.61"
+    },
+    "P00027": {
+      "quantity": 366,
+      "revenue": "39393.86"
+    },
+    "P00028": {
+      "quantity": 369,
+      "revenue": "33330.73"
+    },
+    "P00029": {
+      "quantity": 425,
+      "revenue": "37518.04"
+    },
+    "P00030": {
+      "quantity": 353,
+      "revenue": "36248.54"
+    },
+    "P00031": {
+      "quantity": 416,
+      "revenue": "44379.51"
+    },
+    "P00032": {
+      "quantity": 358,
+      "revenue": "38664.02"
+    },
+    "P00033": {
+      "quantity": 372,
+      "revenue": "39943.33"
+    },
+    "P00034": {
+      "quantity": 393,
+      "revenue": "37351.27"
+    },
+    "P00035": {
+      "quantity": 325,
+      "revenue": "32046.35"
+    },
+    "P00036": {
+      "quantity": 411,
+      "revenue": "41749.86"
+    },
+    "P00037": {
+      "quantity": 407,
+      "revenue": "41701.23"
+    },
+    "P00038": {
+      "quantity": 391,
+      "revenue": "38839.07"
+    },
+    "P00039": {
+      "quantity": 342,
+      "revenue": "33794.53"
+    },
+    "P00040": {
+      "quantity": 347,
+      "revenue": "36704.21"
+    },
+    "P00041": {
+      "quantity": 381,
+      "revenue": "38166.09"
+    },
+    "P00042": {
+      "quantity": 409,
+      "revenue": "41251.00"
+    },
+    "P00043": {
+      "quantity": 361,
+      "revenue": "32992.28"
+    },
+    "P00044": {
+      "quantity": 343,
+      "revenue": "38862.46"
+    },
+    "P00045": {
+      "quantity": 379,
+      "revenue": "39275.02"
+    },
+    "P00046": {
+      "quantity": 396,
+      "revenue": "38983.15"
+    },
+    "P00047": {
+      "quantity": 380,
+      "revenue": "37487.77"
+    },
+    "P00048": {
+      "quantity": 411,
+      "revenue": "39435.21"
+    },
+    "P00049": {
+      "quantity": 376,
+      "revenue": "36713.27"
+    },
+    "P00050": {
+      "quantity": 295,
+      "revenue": "31306.90"
+    },
+    "P00051": {
+      "quantity": 314,
+      "revenue": "29910.12"
+    },
+    "P00052": {
+      "quantity": 368,
+      "revenue": "35331.42"
+    },
+    "P00053": {
+      "quantity": 332,
+      "revenue": "37294.88"
+    },
+    "P00054": {
+      "quantity": 409,
+      "revenue": "41362.04"
+    },
+    "P00055": {
+      "quantity": 368,
+      "revenue": "35774.13"
+    },
+    "P00056": {
+      "quantity": 415,
+      "revenue": "43334.00"
+    },
+    "P00057": {
+      "quantity": 350,
+      "revenue": "35527.92"
+    },
+    "P00058": {
+      "quantity": 319,
+      "revenue": "29387.09"
+    },
+    "P00059": {
+      "quantity": 373,
+      "revenue": "34595.14"
+    },
+    "P00060": {
+      "quantity": 462,
+      "revenue": "47753.76"
+    },
+    "P00061": {
+      "quantity": 388,
+      "revenue": "38346.72"
+    },
+    "P00062": {
+      "quantity": 383,
+      "revenue": "39517.91"
+    },
+    "P00063": {
+      "quantity": 420,
+      "revenue": "44019.52"
+    },
+    "P00064": {
+      "quantity": 426,
+      "revenue": "41958.10"
+    },
+    "P00065": {
+      "quantity": 319,
+      "revenue": "33890.46"
+    },
+    "P00066": {
+      "quantity": 381,
+      "revenue": "37702.88"
+    },
+    "P00067": {
+      "quantity": 359,
+      "revenue": "32725.89"
+    },
+    "P00068": {
+      "quantity": 344,
+      "revenue": "37776.11"
+    },
+    "P00069": {
+      "quantity": 366,
+      "revenue": "37588.61"
+    },
+    "P00070": {
+      "quantity": 330,
+      "revenue": "32697.87"
+    },
+    "P00071": {
+      "quantity": 402,
+      "revenue": "40972.89"
+    },
+    "P00072": {
+      "quantity": 361,
+      "revenue": "33006.24"
+    },
+    "P00073": {
+      "quantity": 363,
+      "revenue": "37900.94"
+    },
+    "P00074": {
+      "quantity": 371,
+      "revenue": "40639.54"
+    },
+    "P00075": {
+      "quantity": 364,
+      "revenue": "37207.40"
+    },
+    "P00076": {
+      "quantity": 332,
+      "revenue": "32375.46"
+    },
+    "P00077": {
+      "quantity": 406,
+      "revenue": "42224.97"
+    },
+    "P00078": {
+      "quantity": 350,
+      "revenue": "36838.87"
+    },
+    "P00079": {
+      "quantity": 355,
+      "revenue": "37437.77"
+    },
+    "P00080": {
+      "quantity": 319,
+      "revenue": "31652.49"
+    }
+  },
+  "expected_by_store": {
+    "S001": {
+      "quantity": 5952,
+      "revenue": "595044.70"
+    },
+    "S002": {
+      "quantity": 6120,
+      "revenue": "607765.16"
+    },
+    "S003": {
+      "quantity": 5969,
+      "revenue": "604828.04"
+    },
+    "S004": {
+      "quantity": 5959,
+      "revenue": "588558.89"
+    },
+    "S005": {
+      "quantity": 5867,
+      "revenue": "587576.21"
+    }
+  },
+  "expected_quantity": 29867,
+  "expected_revenue": "2983773.00",
+  "file_modified_at_utc": "2026-11-15T17:06:13Z",
+  "generated_at_utc": "2026-11-15T17:06:13Z",
+  "input_file": "data/samples/synthetic_10000.jsonl",
+  "invalid_count": 0,
+  "invalid_reasons": {},
+  "json_payload_bytes": 4492027,
+  "manifest_version": "1.0.0",
+  "message_count": 10000,
+  "policy": "invalid-first; only accepted transaction_id duplicates; no late-event filtering",
+  "raw_file_bytes": 4502027,
+  "run_id": "stage02_demo",
+  "schema_version": [
+    "1.0.0"
+  ],
+  "seed": 2026,
+  "sha256": "3c92fe45e853dc0bee55e5fc1d445d49937a6cd8a4dd7523861be756886b09c4",
+  "source_types": [
+    "synthetic"
+  ],
+  "unique_transaction_id_count": 10000,
+  "valid_count": 10000
+}

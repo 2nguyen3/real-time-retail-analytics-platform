@@ -1,0 +1,47 @@
+# Python and local environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*.json
+*service-account*.json
+.aws/
+.azure/
+
+# Containers, logs and temporary files
+docker/volumes/
+docker/data/
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Large or generated datasets; small reviewed samples remain trackable
+data/raw/
+data/generated/
+data/benchmark/
+data/large/
+*.parquet
+*.arrow
+*.feather
+
+# Record video outside Git; review screenshots before adding
+docs/evidence/*.mp4
+docs/evidence/private/
