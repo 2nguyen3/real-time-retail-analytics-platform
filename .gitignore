@@ -32,6 +32,7 @@ docker/data/
 *.tmp
 *.swp
 .DS_Store
+reports/runtime/
 
 # Large or generated datasets; small reviewed samples remain trackable
 data/raw/
