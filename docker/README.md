@@ -14,6 +14,8 @@ docker compose -f docker/compose.yaml ps --all
 
 `kafka-volume-init` chỉ chạy ngắn hạn để đổi chủ sở hữu **named volume Kafka** sang UID/GID `1000:1000`; broker vẫn chạy bằng `appuser`, không chạy thường xuyên bằng root. `kafka-init` tạo topic `retail.sales.transactions` với 3 partitions, replication factor 1 rồi thoát mã 0. Kiểm thực tế:
 
+Từ Giai đoạn 05, `flink-checkpoint-init` cũng chạy một lần để đổi chủ sở hữu **chỉ named volume checkpoint** sang UID/GID `9999:9999`; Flink JobManager/TaskManager vẫn chạy bằng user `flink`. Lần dựng cũ từng báo `Permission denied` khi TaskManager ghi `/opt/flink/checkpoints`; sau init đã kiểm được thao tác ghi/xóa file probe nhỏ bằng UID 9999. Xem [Flink job](../docs/flink-job.md) để chạy SQL và kiểm checkpoint.
+
 ```bash
 docker compose -f docker/compose.yaml exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --describe --topic retail.sales.transactions
 docker compose -f docker/compose.yaml exec kafka sh -c 'id; stat -c "%u:%g %a %n" /tmp/kraft-combined-logs'

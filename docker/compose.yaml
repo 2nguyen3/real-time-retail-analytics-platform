@@ -73,10 +73,22 @@ services:
     restart: "no"
     networks: [retail]
 
+  flink-checkpoint-init:
+    image: retail-flink:2.2.1-local
+    user: "0:0"
+    entrypoint: ["/bin/sh", "-ec", "chown -R 9999:9999 /opt/flink/checkpoints"]
+    volumes:
+      - flink_checkpoints:/opt/flink/checkpoints
+    network_mode: none
+    restart: "no"
+
   flink-jobmanager:
     build: ./flink
     image: retail-flink:2.2.1-local
     command: jobmanager
+    depends_on:
+      flink-checkpoint-init:
+        condition: service_completed_successfully
     ports:
       - "127.0.0.1:8081:8081"
     environment:
@@ -95,7 +107,10 @@ services:
     volumes:
       - flink_checkpoints:/opt/flink/checkpoints
     depends_on:
-      - flink-jobmanager
+      flink-checkpoint-init:
+        condition: service_completed_successfully
+      flink-jobmanager:
+        condition: service_started
     mem_limit: 1792m
     networks: [retail]
 
