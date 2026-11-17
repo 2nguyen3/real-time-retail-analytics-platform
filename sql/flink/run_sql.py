@@ -38,7 +38,8 @@ def offsets(path: Path) -> tuple[str, str]:
     return data["topic"], ";".join(f"partition:{p},offset:{mapping[p]}" for p in sorted(mapping))
 
 
-def render(name: str, start: Path, end: Path | None, query: str, restore_path: str | None = None) -> str:
+def render_setup(name: str, start: Path, end: Path | None, restore_path: str | None = None,
+                 group_prefix: str = "flink-stage05") -> str:
     if not re.fullmatch(r"[A-Za-z0-9_]{1,40}", name):
         raise ValueError("name must contain only letters, digits and underscore")
     _, start_offsets = offsets(start)
@@ -50,10 +51,8 @@ def render(name: str, start: Path, end: Path | None, query: str, restore_path: s
         if any(int(end_map[p]) < int(start_map[p]) for p in start_map):
             raise ValueError("end offsets precede start offsets")
         bound = ",\n  'scan.bounded.mode' = 'specific-offsets',\n  'scan.bounded.specific-offsets' = '" + end_offsets + "'"
-    if query == "stream_windows" and end is not None:
-        raise ValueError("stream_windows must be unbounded; omit --end")
     source = (HERE / "01_kafka_source.sql").read_text(encoding="utf-8")
-    source = source.replace("{{GROUP_ID}}", f"flink-stage05-{name}")
+    source = source.replace("{{GROUP_ID}}", f"{group_prefix}-{name}")
     source = source.replace("{{START_OFFSETS}}", start_offsets).replace("{{BOUND_OPTIONS}}", bound)
     common = "\n".join((HERE / file).read_text(encoding="utf-8") for file in
                        ("02_clean.sql", "03_aggregates.sql", "04_windows.sql"))
@@ -65,12 +64,21 @@ SET 'execution.checkpointing.interval' = '10 s';
 SET 'execution.checkpointing.dir' = 'file:///opt/flink/checkpoints';
 """
     if restore_path is not None:
-        if query != "stream_windows" or not re.fullmatch(
+        if not re.fullmatch(
             r"file:/opt/flink/checkpoints/savepoints/savepoint-[A-Za-z0-9-]+", restore_path
         ):
-            raise ValueError("restore path must be a Stage 05 savepoint in the checkpoint volume")
+            raise ValueError("restore path must be a savepoint in the checkpoint volume")
         settings += f"SET 'execution.state-recovery.path' = '{restore_path}';\n"
-    return settings + source + "\n" + common + "\n" + QUERIES[query] + ";\n"
+    settings += "SET 'table.local-time-zone' = 'UTC';\n"
+    return settings + source + "\n" + common + "\n"
+
+
+def render(name: str, start: Path, end: Path | None, query: str, restore_path: str | None = None) -> str:
+    if query == "stream_windows" and end is not None:
+        raise ValueError("stream_windows must be unbounded; omit --end")
+    if restore_path is not None and query != "stream_windows":
+        raise ValueError("Stage 05 restore is only supported for stream_windows")
+    return render_setup(name, start, end, restore_path) + QUERIES[query] + ";\n"
 
 
 def main() -> int:

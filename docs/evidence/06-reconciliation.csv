@@ -1,0 +1,16 @@
+run_id,table,expected_rows,actual_rows,expected_count,actual_count,expected_quantity,actual_quantity,expected_revenue,actual_revenue,key_mismatches,status
+stage06_syn_1000,sales_by_store,5,5,1000,1000,2985,2985,310265.83,310265.83,0,PASS
+stage06_syn_1000,sales_by_store_product,373,373,1000,1000,2985,2985,310265.83,310265.83,0,PASS
+stage06_syn_1000,sales_by_store_minute,334,334,1000,1000,2985,2985,310265.83,310265.83,0,PASS
+stage06_sor_100,sales_by_store,7,7,100,100,145,145,223.95,223.95,0,PASS
+stage06_sor_100,sales_by_store_product,99,99,100,100,145,145,223.95,223.95,0,PASS
+stage06_sor_100,sales_by_store_minute,18,18,100,100,145,145,223.95,223.95,0,PASS
+stage06_ordered_01,sales_by_store,1,1,21,21,65,65,6147.57,6147.57,0,PASS
+stage06_ordered_01,sales_by_store_product,20,20,21,21,65,65,6147.57,6147.57,0,PASS
+stage06_ordered_01,sales_by_store_minute,20,20,20,20,64,64,5982.53,5982.53,0,PASS
+stage06_quality_a,sales_by_store,2,2,3,3,6,6,6.50,6.50,0,PASS
+stage06_quality_a,sales_by_store_product,3,3,3,3,6,6,6.50,6.50,0,PASS
+stage06_quality_a,sales_by_store_minute,2,2,3,3,6,6,6.50,6.50,0,PASS
+stage06_quality_b,sales_by_store,1,1,1,1,2,2,3.00,3.00,0,PASS
+stage06_quality_b,sales_by_store_product,1,1,1,1,2,2,3.00,3.00,0,PASS
+stage06_quality_b,sales_by_store_minute,1,1,1,1,2,2,3.00,3.00,0,PASS

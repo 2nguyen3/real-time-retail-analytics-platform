@@ -1,0 +1,91 @@
+Null display is "(null)".
+Schema and primary keys
+       table_name       |                      primary_key
+------------------------+--------------------------------------------------------
+ pipeline_runs          | PRIMARY KEY (run_id)
+ products               | PRIMARY KEY (product_id)
+ sales_by_store         | PRIMARY KEY (run_id, store_id, currency)
+ sales_by_store_minute  | PRIMARY KEY (run_id, store_id, window_start, currency)
+ sales_by_store_product | PRIMARY KEY (run_id, store_id, product_id, currency)
+ stores                 | PRIMARY KEY (store_id)
+(6 rows)
+
+Revenue types and NOT NULL
+       table_name       |  column_name  |     data_type     | numeric_precision | numeric_scale | is_nullable
+------------------------+---------------+-------------------+-------------------+---------------+-------------
+ sales_by_store         | currency      | character varying |            (null) |        (null) | NO
+ sales_by_store         | run_id        | text              |            (null) |        (null) | NO
+ sales_by_store         | total_revenue | numeric           |                28 |             2 | NO
+ sales_by_store_minute  | currency      | character varying |            (null) |        (null) | NO
+ sales_by_store_minute  | run_id        | text              |            (null) |        (null) | NO
+ sales_by_store_minute  | total_revenue | numeric           |                28 |             2 | NO
+ sales_by_store_product | currency      | character varying |            (null) |        (null) | NO
+ sales_by_store_product | run_id        | text              |            (null) |        (null) | NO
+ sales_by_store_product | total_revenue | numeric           |                28 |             2 | NO
+(9 rows)
+
+Indexes (including primary-key indexes)
+       tablename        |              indexname              |                                                               indexdef
+------------------------+-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------
+ sales_by_store         | sales_by_store_pkey                 | CREATE UNIQUE INDEX sales_by_store_pkey ON public.sales_by_store USING btree (run_id, store_id, currency)
+ sales_by_store_minute  | idx_sales_store_minute_run_time     | CREATE INDEX idx_sales_store_minute_run_time ON public.sales_by_store_minute USING btree (run_id, window_start)
+ sales_by_store_minute  | sales_by_store_minute_pkey          | CREATE UNIQUE INDEX sales_by_store_minute_pkey ON public.sales_by_store_minute USING btree (run_id, store_id, window_start, currency)
+ sales_by_store_product | idx_sales_store_product_run_product | CREATE INDEX idx_sales_store_product_run_product ON public.sales_by_store_product USING btree (run_id, product_id)
+ sales_by_store_product | sales_by_store_product_pkey         | CREATE UNIQUE INDEX sales_by_store_product_pkey ON public.sales_by_store_product USING btree (run_id, store_id, product_id, currency)
+(5 rows)
+
+Run summaries: each aggregate table is checked separately
+       table_name       | currency | rows | transaction_count | quantity |  revenue
+------------------------+----------+------+-------------------+----------+-----------
+ sales_by_store         | USD      |    5 |              1000 |     2985 | 310265.83
+ sales_by_store_minute  | USD      |  334 |              1000 |     2985 | 310265.83
+ sales_by_store_product | USD      |  373 |              1000 |     2985 | 310265.83
+(3 rows)
+
+Duplicate aggregate keys: expected all zero
+       table_name       | duplicate_groups
+------------------------+------------------
+ sales_by_store         |                0
+ sales_by_store_product |                0
+ sales_by_store_minute  |                0
+(3 rows)
+
+Dimension gaps
+ missing_stores | missing_products
+----------------+------------------
+              0 |                0
+(1 row)
+
+Report query plan by store
+                                                  QUERY PLAN
+---------------------------------------------------------------------------------------------------------------
+ Sort  (cost=1.36..1.37 rows=5 width=17) (actual time=0.015..0.015 rows=5 loops=1)
+   Sort Key: total_revenue DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=4
+   ->  Seq Scan on sales_by_store  (cost=0.00..1.30 rows=5 width=17) (actual time=0.003..0.004 rows=5 loops=1)
+         Filter: (run_id = 'stage06_syn_1000'::text)
+         Rows Removed by Filter: 20
+         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=10
+ Planning Time: 0.036 ms
+ Execution Time: 0.020 ms
+(12 rows)
+
+Report query plan by minute range
+                                                                                               QUERY PLAN
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=27.50..28.30 rows=317 width=23) (actual time=0.082..0.090 rows=334 loops=1)
+   Sort Key: window_start, store_id
+   Sort Method: quicksort  Memory: 38kB
+   Buffers: shared hit=11
+   ->  Seq Scan on sales_by_store_minute  (cost=0.00..14.34 rows=317 width=23) (actual time=0.004..0.034 rows=334 loops=1)
+         Filter: ((window_start >= '2024-01-01 00:00:00+00'::timestamp with time zone) AND (window_start < '2024-01-02 00:00:00+00'::timestamp with time zone) AND (run_id = 'stage06_syn_1000'::text))
+         Rows Removed by Filter: 48
+         Buffers: shared hit=8
+ Planning:
+   Buffers: shared hit=3
+ Planning Time: 0.033 ms
+ Execution Time: 0.102 ms
+(12 rows)
