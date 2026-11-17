@@ -29,7 +29,7 @@ from producer.generate_data import rows as synthetic_rows  # noqa: E402
 from sql.flink.verify_results import final_rows, verify as verify_flink  # noqa: E402
 from sql.postgres.reconcile import reconcile  # noqa: E402
 
-PYTHON = ROOT / ".venv/bin/python"
+PYTHON = ROOT / (".venv/Scripts/python.exe" if (ROOT / ".venv/Scripts/python.exe").exists() else ".venv/bin/python")
 SAMPLE = ROOT / "data/samples/synthetic_10000.jsonl"
 TOPIC = "retail.sales.transactions"
 FLINK = "retail-local-flink-jobmanager-1"

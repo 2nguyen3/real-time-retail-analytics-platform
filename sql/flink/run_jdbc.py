@@ -46,11 +46,14 @@ def submit(name: str, start: Path, end: Path | None, restore_path: str | None) -
     remote = f"/tmp/stage06_{name}.sql"
     runtime = ROOT / "reports/runtime/flink"
     runtime.mkdir(parents=True, exist_ok=True)
+    local_path = None
     try:
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".sql", delete=True) as local:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".sql", delete=False) as local:
+            local_path = local.name
             os.chmod(local.name, 0o600)
             local.write(sql)
             local.flush()
+            local.close()
             subprocess.run(["docker", "cp", local.name, f"{CONTAINER}:{remote}"],
                            check=True, capture_output=True)
             subprocess.run(["docker", "exec", "-u", "0", CONTAINER, "chown", "9999:9999", remote],
@@ -83,6 +86,8 @@ def submit(name: str, start: Path, end: Path | None, restore_path: str | None) -
                 "job_state": job_state, "job_ids": job_ids,
                 "log": str(log), "exit_code": result.returncode}
     finally:
+        if local_path:
+            Path(local_path).unlink(missing_ok=True)
         subprocess.run(["docker", "exec", "-u", "0", CONTAINER, "rm", "-f", remote],
                        capture_output=True)
 

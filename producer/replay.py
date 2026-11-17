@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import json
 import math
 import sqlite3
@@ -37,7 +38,7 @@ def preflight(path: Path, limit: int | None, run_id: str) -> int:
         raise ValueError(f"input does not exist: {path}")
     count = 0
     with tempfile.TemporaryDirectory(prefix="retail-replay-") as directory:
-        with sqlite3.connect(str(Path(directory) / "ids.sqlite3")) as db:
+        with closing(sqlite3.connect(str(Path(directory) / "ids.sqlite3"))) as db:
             db.execute("CREATE TABLE seen (transaction_id TEXT PRIMARY KEY)")
             for record in read_records(path, limit):
                 prepare(record, run_id)

@@ -18,7 +18,7 @@ pytestmark = pytest.mark.skipif(not ENABLED, reason="set RUN_STAGE07_INTEGRATION
 
 def run_cases(*cases: str) -> None:
     batch = "pytest_" + uuid.uuid4().hex[:10]
-    result = subprocess.run([str(ROOT / ".venv/bin/python"), str(RUNNER),
+    result = subprocess.run([str(ROOT / (".venv/Scripts/python.exe" if (ROOT / ".venv/Scripts/python.exe").exists() else ".venv/bin/python")), str(RUNNER),
                              "--cases", *cases, "--batch", batch],
                             cwd=ROOT, capture_output=True, text=True, timeout=360)
     assert result.returncode == 0, (result.stdout + result.stderr)[-3000:]
