@@ -6,12 +6,32 @@ import argparse
 import csv
 import io
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 
 HERE = Path(__file__).resolve().parent
+
+
+def psql_argv(extra: list[str], interactive: bool = False) -> tuple[list[str], dict | None]:
+    """Build a psql command. By default it runs in the local PostgreSQL container; set
+    PG_HOST, PG_USER and PG_PASSWORD (optional PG_DB) to use another server over SSL."""
+    host = os.environ.get("PG_HOST")
+    if not host:
+        base = ["docker", "exec"] + (["-i"] if interactive else []) + [
+            "retail-local-postgres-1", "sh", "-c",
+            'psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1' + (' -c "$1"' if extra else "")]
+        return (base + (["sh"] + extra if extra else [])), None
+    user, password = os.environ.get("PG_USER"), os.environ.get("PG_PASSWORD")
+    if not user or not password:
+        raise ValueError("PG_USER and PG_PASSWORD are required when PG_HOST is set")
+    env = {**os.environ, "PGPASSWORD": password, "PGSSLMODE": "require"}
+    base = ["docker", "run", "--rm"] + (["-i"] if interactive else []) + [
+        "-e", "PGPASSWORD", "-e", "PGSSLMODE", "postgres:17-alpine", "psql", "-X", "-h", host,
+        "-U", user, "-d", os.environ.get("PG_DB", "retail_analytics"), "-v", "ON_ERROR_STOP=1"]
+    return (base + (["-c", extra[0]] if extra else [])), env
 
 
 def observed(path: Path, limit: int | None) -> tuple[dict[str, str | None], dict[str, str | None], list[tuple]]:
@@ -47,11 +67,8 @@ CREATE TEMP TABLE stage06_dimension_input (
 );
 COPY stage06_dimension_input (store_id, store_region, product_id, category_id) FROM STDIN WITH (FORMAT csv);
 """ + buffer.getvalue() + "\\.\n" + (HERE / "02_seed_dimensions.sql").read_text(encoding="utf-8") + "\nCOMMIT;\n"
-    result = subprocess.run(
-        ["docker", "exec", "-i", "retail-local-postgres-1", "sh", "-c",
-         'psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1'],
-        input=sql.encode("utf-8"), capture_output=True,
-    )
+    argv, env = psql_argv([], interactive=True)
+    result = subprocess.run(argv, input=sql.encode("utf-8"), capture_output=True, env=env)
     if result.returncode:
         raise RuntimeError(result.stderr.decode("utf-8", errors="replace"))
     return {"source_rows": len(rows), "distinct_stores": len(stores),

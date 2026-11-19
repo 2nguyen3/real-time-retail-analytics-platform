@@ -57,7 +57,21 @@ def command(args: list[str | Path], timeout: int = 120) -> str:
     return result.stdout
 
 
+def cloud_pg() -> bool:
+    """True when PG_HOST/PG_USER/PG_PASSWORD point the tests at a managed PostgreSQL."""
+    return bool(os.environ.get("PG_HOST"))
+
+
 def pg(sql: str) -> list[list[str]]:
+    if cloud_pg():
+        result = subprocess.run(
+            ["docker", "run", "--rm", "-e", "PGPASSWORD", "-e", "PGSSLMODE", "postgres:17-alpine",
+             "psql", "-X", "-h", os.environ["PG_HOST"], "-U", os.environ["PG_USER"],
+             "-d", os.environ.get("PG_DB", "retail_analytics"), "-v", "ON_ERROR_STOP=1",
+             "-F", "|", "-At", "-c", sql],
+            capture_output=True, text=True, timeout=60, check=True,
+            env={**os.environ, "PGPASSWORD": os.environ["PG_PASSWORD"], "PGSSLMODE": "require"})
+        return [line.split("|") for line in result.stdout.splitlines() if line]
     output = command(["docker", "exec", POSTGRES, "sh", "-c",
                       'psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -F "|" -At -c "$1"',
                       "sh", sql], timeout=20)
@@ -94,7 +108,7 @@ def readiness() -> dict:
     if shutil.disk_usage(ROOT).free < 5 * 1024**3:
         raise RuntimeError("less than 5 GiB SSD free")
     names = command(["docker", "ps", "--format", "{{.Names}} {{.Status}}"])
-    for service in ("kafka", "flink-jobmanager", "flink-taskmanager", "postgres"):
+    for service in ("kafka", "flink-jobmanager", "flink-taskmanager") + (() if cloud_pg() else ("postgres",)):
         if not any(service in line and "Up" in line for line in names.splitlines()):
             raise RuntimeError(f"{service} is not running")
     if pg("SELECT 1")[0][0] != "1":
@@ -486,6 +500,8 @@ class Stage07:
                 self.restarts.append(f"{utc_now()} TC07 cleanup savepoint: {stop_job(active_job)}")
 
     def postgres_restart_test(self) -> dict:
+        if cloud_pg():
+            raise SkipCase("managed PostgreSQL restart needs the Azure CLI; run it from a machine with az")
         if self.normal is None:
             raise RuntimeError("TC01 must pass before PostgreSQL restart")
         run = self.normal["run_id"]

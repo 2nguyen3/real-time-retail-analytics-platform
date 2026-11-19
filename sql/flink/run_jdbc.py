@@ -34,15 +34,29 @@ def sql_quote(value: str) -> str:
     return value.replace("'", "''")
 
 
+LOCAL_JDBC_URL = "jdbc:postgresql://postgres:5432/retail_analytics"
+
+
+def jdbc_target() -> tuple[str, str, str]:
+    """Return (url, user, password). Set JDBC_URL/JDBC_USER/JDBC_PASSWORD to target another
+    PostgreSQL (for example a managed server); otherwise use the local container."""
+    url = os.environ.get("JDBC_URL")
+    if url:
+        user, password = os.environ.get("JDBC_USER"), os.environ.get("JDBC_PASSWORD")
+        if not user or not password:
+            raise ValueError("JDBC_USER and JDBC_PASSWORD are required when JDBC_URL is set")
+        return url, user, password
+    return LOCAL_JDBC_URL, container_env("POSTGRES_USER"), container_env("POSTGRES_PASSWORD")
+
+
 def submit(name: str, start: Path, end: Path | None, restore_path: str | None) -> dict:
-    username = container_env("POSTGRES_USER")
-    password = container_env("POSTGRES_PASSWORD")
+    url, username, password = jdbc_target()
     template = (HERE / "05_jdbc_sinks.sql").read_text(encoding="utf-8")
     sql = render_setup(name, start, end, restore_path, group_prefix="flink-stage06")
     if end is not None:
         sql += "SET 'table.dml-sync' = 'true';\n"
-    sql += template.replace("{{JDBC_USER}}", sql_quote(username)).replace(
-        "{{JDBC_PASSWORD}}", sql_quote(password))
+    sql += template.replace("{{JDBC_URL}}", sql_quote(url)).replace(
+        "{{JDBC_USER}}", sql_quote(username)).replace("{{JDBC_PASSWORD}}", sql_quote(password))
     remote = f"/tmp/stage06_{name}.sql"
     runtime = ROOT / "reports/runtime/flink"
     runtime.mkdir(parents=True, exist_ok=True)

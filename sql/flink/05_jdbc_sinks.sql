@@ -9,7 +9,7 @@ CREATE TEMPORARY TABLE pg_sales_by_store (
   PRIMARY KEY (run_id, store_id, currency) NOT ENFORCED
 ) WITH (
   'connector' = 'jdbc',
-  'url' = 'jdbc:postgresql://postgres:5432/retail_analytics',
+  'url' = '{{JDBC_URL}}',
   'table-name' = 'sales_by_store',
   'driver' = 'org.postgresql.Driver',
   'username' = '{{JDBC_USER}}',
@@ -31,7 +31,7 @@ CREATE TEMPORARY TABLE pg_sales_by_store_product (
   PRIMARY KEY (run_id, store_id, product_id, currency) NOT ENFORCED
 ) WITH (
   'connector' = 'jdbc',
-  'url' = 'jdbc:postgresql://postgres:5432/retail_analytics',
+  'url' = '{{JDBC_URL}}',
   'table-name' = 'sales_by_store_product',
   'driver' = 'org.postgresql.Driver',
   'username' = '{{JDBC_USER}}',
@@ -54,7 +54,7 @@ CREATE TEMPORARY TABLE pg_sales_by_store_minute (
   PRIMARY KEY (run_id, store_id, window_start, currency) NOT ENFORCED
 ) WITH (
   'connector' = 'jdbc',
-  'url' = 'jdbc:postgresql://postgres:5432/retail_analytics',
+  'url' = '{{JDBC_URL}}',
   'table-name' = 'sales_by_store_minute',
   'driver' = 'org.postgresql.Driver',
   'username' = '{{JDBC_USER}}',

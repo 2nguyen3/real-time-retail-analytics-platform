@@ -1,0 +1,6 @@
+2026-11-19T15:17:05Z TC05 stop savepoint: file:/opt/flink/checkpoints/savepoints/savepoint-c38fe9-2709a55f7df0
+2026-11-19T15:17:33Z TC06: process 1 ACK=10 pending=0; resume from source line 11; process 2 ACK=10 pending=0; Kafka/DB=20; job=6bd117343de70e99ccabb2af489d4e7e
+2026-11-19T15:18:06Z TC07 before restore: ACK=10 Kafka_delta=10 DB_store=10 job=db5ddab2f496b797fb2461652131dbf1 checkpoint=1 savepoint=file:/opt/flink/checkpoints/savepoints/savepoint-db5dda-5b54560ea2cb
+2026-11-19T15:18:35Z TC07 after restore: ACK=10+11 Kafka=21 DB_store=21 closed_windows=20 restored=1 job=0decd556000d2fd3cf35fdf7f705f5ce; all three comparable aggregates match
+2026-11-19T15:18:35Z TC07 cleanup savepoint: file:/opt/flink/checkpoints/savepoints/savepoint-0decd5-c08f0879c8b2
+2026-11-19T15:20:14Z TC08 (cloud, run from admin machine with Azure CLI) managed PostgreSQL restart via az; state Ready at 15:21:20Z; before=(5, 1000, 2985, 310265.83) after=(5, 1000, 2985, 310265.83); three tables reconciled PASS; run_id=s07_efde7a9e73_normal

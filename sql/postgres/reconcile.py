@@ -6,12 +6,32 @@ import argparse
 import csv
 import io
 import json
+import os
 import re
 import subprocess
 from collections import defaultdict
 from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
+
+
+def psql_argv(extra: list[str], interactive: bool = False) -> tuple[list[str], dict | None]:
+    """Build a psql command. By default it runs in the local PostgreSQL container; set
+    PG_HOST, PG_USER and PG_PASSWORD (optional PG_DB) to use another server over SSL."""
+    host = os.environ.get("PG_HOST")
+    if not host:
+        base = ["docker", "exec"] + (["-i"] if interactive else []) + [
+            "retail-local-postgres-1", "sh", "-c",
+            'psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1' + (' -c "$1"' if extra else "")]
+        return (base + (["sh"] + extra if extra else [])), None
+    user, password = os.environ.get("PG_USER"), os.environ.get("PG_PASSWORD")
+    if not user or not password:
+        raise ValueError("PG_USER and PG_PASSWORD are required when PG_HOST is set")
+    env = {**os.environ, "PGPASSWORD": password, "PGSSLMODE": "require"}
+    base = ["docker", "run", "--rm"] + (["-i"] if interactive else []) + [
+        "-e", "PGPASSWORD", "-e", "PGSSLMODE", "postgres:17-alpine", "psql", "-X", "-h", host,
+        "-U", user, "-d", os.environ.get("PG_DB", "retail_analytics"), "-v", "ON_ERROR_STOP=1"]
+    return (base + (["-c", extra[0]] if extra else [])), env
 
 
 TABLE_KEYS = {
@@ -74,11 +94,8 @@ def actual(table: str, run_id: str) -> dict:
         raise ValueError("invalid run ID")
     query = (f"COPY (SELECT {fields}, transaction_count, total_quantity, total_revenue "
              f"FROM {table} WHERE run_id = '{run_id}') TO STDOUT WITH (FORMAT csv)")
-    result = subprocess.run(
-        ["docker", "exec", "retail-local-postgres-1", "sh", "-c",
-         'psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -c "$1"',
-         "sh", query], capture_output=True, check=True, text=True,
-    )
+    argv, env = psql_argv([query])
+    result = subprocess.run(argv, capture_output=True, check=True, text=True, env=env)
     output = {}
     key_width = len(TABLE_KEYS[table])
     for row in csv.reader(io.StringIO(result.stdout)):
