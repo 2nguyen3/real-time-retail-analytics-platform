@@ -1,0 +1,58 @@
+{
+  "name": "RetailIndigo-288e1d2a.json",
+  "dataColors": [
+    "#439FBD",
+    "#F4B459",
+    "#8FCADF",
+    "#F9D56E",
+    "#221860",
+    "#3FB6A8",
+    "#B9DDEB",
+    "#E0643C",
+    "#7C8FA3",
+    "#B8CAD6"
+  ],
+  "good": "#3FB6A8",
+  "neutral": "#D9B300",
+  "bad": "#E0643C",
+  "maximum": "#439FBD",
+  "center": "#8FCADF",
+  "minimum": "#E8F2F8",
+  "null": "#7C8FA3",
+  "foreground": "#16243F",
+  "background": "#FFFFFF",
+  "tableAccent": "#221860",
+  "textClasses": {
+    "label": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI",
+      "color": "#16243F"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16243F"
+    },
+    "callout": {
+      "fontSize": 32,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16243F"
+    },
+    "header": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#16243F"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+/// Quản lý vùng: chỉ thấy các cửa hàng thuộc vùng North (và doanh thu của chúng).
+role 'Region North'
+	modelPermission: read
+
+	tablePermission Store = [Region] = "North"
+
+	annotation PBI_Id = 05efa689ee534921a2ebb682311ec239
+

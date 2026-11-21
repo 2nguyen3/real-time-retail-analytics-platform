@@ -1,0 +1,17 @@
+relationship 'Sales to Store'
+	fromColumn: Sales.'Store ID'
+	toColumn: Store.'Store ID'
+
+relationship 'Sales to Product'
+	fromColumn: Sales.'Product ID'
+	toColumn: Product.'Product ID'
+
+relationship 'Sales by Minute to Store'
+	fromColumn: 'Sales by Minute'.'Store ID'
+	toColumn: Store.'Store ID'
+
+relationship 3efdea7f-a14b-43af-85a4-341a47f1dc55
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Sales by Minute'.Date
+	toColumn: LocalDateTable_0dc01281-4d10-471a-9e70-c0ff44c3a548.Date
+

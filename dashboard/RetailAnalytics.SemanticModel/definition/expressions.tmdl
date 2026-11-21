@@ -1,0 +1,18 @@
+/// Địa chỉ máy chủ PostgreSQL trên Azure (kèm cổng). Không chứa thông tin đăng nhập.
+expression Server = "psql-retail-ea-7476.postgres.database.azure.com:5432" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: c250658b-18b8-473f-8b49-b4c25fcaf379
+
+	annotation PBI_ResultType = Text
+
+/// Tên database chứa các bảng tổng hợp doanh thu.
+expression Database = "retail_analytics" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b837bc6b-06b9-42b5-80ee-843e63de1e50
+
+	annotation PBI_ResultType = Text
+
+/// Mã lượt chạy (run) được nạp vào dashboard. Chỉ nạp một run để tránh cộng trùng số liệu.
+expression 'Run ID' = "s07_efde7a9e73_tenk" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 05e73712-7f2f-43c0-a732-3e21591165a7
+
+	annotation PBI_ResultType = Text
+

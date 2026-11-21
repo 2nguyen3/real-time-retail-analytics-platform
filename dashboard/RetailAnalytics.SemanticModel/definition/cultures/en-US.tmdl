@@ -1,0 +1,368 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "sales_by_minute.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ngày": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.hour": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Hour"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Giờ": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.minute_avg_transaction": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Minute Avg Transaction"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "TB mỗi giao dịch": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.avg_revenue_per_hour": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Avg Revenue per Hour"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "TB mỗi giờ": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.minute_revenue": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Minute Revenue"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Doanh thu": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.minute_transactions": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Minute Transactions"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Giao dịch": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales_by_minute.minute_quantity": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales by Minute",
+			          "ConceptualProperty": "Minute Quantity"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Số lượng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales.revenue": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales",
+			          "ConceptualProperty": "Revenue"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Doanh thu": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales.quantity": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales",
+			          "ConceptualProperty": "Quantity"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Số lượng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales.transactions": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales",
+			          "ConceptualProperty": "Transactions"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Giao dịch": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales.revenue_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales",
+			          "ConceptualProperty": "Revenue Share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tỷ trọng doanh thu": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "sales.store_rank": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Sales",
+			          "ConceptualProperty": "Store Rank"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hạng doanh thu": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "store.region": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Store",
+			          "ConceptualProperty": "Region"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Vùng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "store.store_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Store",
+			          "ConceptualProperty": "Store ID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cửa hàng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "product.category": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Product",
+			          "ConceptualProperty": "Category"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Nhóm hàng": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "product.product_id": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Product",
+			          "ConceptualProperty": "Product ID"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sản phẩm": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "refresh_time.last_refresh_text": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Refresh Time",
+			          "ConceptualProperty": "Last Refresh Text"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cập nhật:": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

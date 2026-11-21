@@ -1,0 +1,483 @@
+/// Doanh thu theo cửa hàng và từng phút (UTC) cho một lượt chạy. Bảng duy nhất có thời gian nên chỉ dùng cho trang Thời gian và biểu đồ xu hướng.
+table 'Sales by Minute'
+	lineageTag: a205541b-f681-4654-999c-8f99842f67a5
+
+	/// Tổng doanh thu (USD mô phỏng) trong khoảng thời gian đang lọc.
+	measure 'Minute Revenue' = SUM('Sales by Minute'[Total Revenue])
+		formatString: #,##0
+		displayFolder: Value
+		lineageTag: cfd6789b-cc0a-4f56-8931-60a1dd968e00
+
+	/// Doanh thu trung bình mỗi giờ trong ngày, tính trên tổng doanh thu của từng giờ (gộp các ngày đang lọc).
+	measure 'Avg Revenue per Hour' = AVERAGEX(VALUES('Sales by Minute'[Hour]), [Minute Revenue])
+		formatString: #,##0
+		displayFolder: Value
+		lineageTag: bb7b666a-0248-4e72-804a-102ccd318be4
+
+	/// Doanh thu của giờ cao điểm: giờ trong ngày có tổng doanh thu lớn nhất (gộp các ngày đang lọc).
+	measure 'Peak Hour Revenue' = MAXX(VALUES('Sales by Minute'[Hour]), [Minute Revenue])
+		formatString: #,##0
+		displayFolder: Value
+		lineageTag: 25107555-e688-4514-a735-5c1d3197e8a4
+
+	/// Giờ cao điểm: giờ trong ngày có tổng doanh thu lớn nhất (gộp các ngày đang lọc).
+	measure 'Busiest Hour' =
+			VAR _byHour = ADDCOLUMNS(VALUES('Sales by Minute'[Hour]), "@Revenue", [Minute Revenue])
+			VAR _top = TOPN(1, _byHour, [@Revenue], DESC)
+			RETURN
+				MAXX(_top, 'Sales by Minute'[Hour])
+		formatString: General
+		displayFolder: Time
+		lineageTag: dbfb8731-e944-40d5-880b-81a478c2ff19
+
+	/// Số dòng giao dịch trong khoảng thời gian đang lọc.
+	measure 'Minute Transactions' = SUM('Sales by Minute'[Transaction Count])
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: 3de4d2c3-e763-47ea-966e-b037eb2de233
+
+	/// Tổng số lượng bán ra trong khoảng thời gian đang lọc.
+	measure 'Minute Quantity' = SUM('Sales by Minute'[Total Quantity])
+		formatString: #,##0
+		displayFolder: Quantity
+		lineageTag: af8f928e-9568-4731-99ed-3fcd0a968716
+
+	/// Doanh thu trung bình mỗi dòng giao dịch trong khoảng thời gian đang lọc.
+	measure 'Minute Avg Transaction' = DIVIDE([Minute Revenue], [Minute Transactions])
+		formatString: #,##0.00
+		displayFolder: Value
+		lineageTag: be212a73-8c50-4e34-abb3-0858e99e2a54
+
+	/// Giờ đầy đủ gần nhất: bỏ giờ cuối cùng vì có thể chưa đủ dữ liệu.
+	measure 'Latest Hour Key' =
+			VAR _all = ALLSELECTED('Sales by Minute'[Hour Key])
+			VAR _max = MAXX(_all, 'Sales by Minute'[Hour Key])
+			RETURN
+			    MAXX(FILTER(_all, 'Sales by Minute'[Hour Key] < _max), 'Sales by Minute'[Hour Key])
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: ed5d0997-ca9b-449e-ac28-19574dab1e95
+
+	/// Giờ liền trước giờ đầy đủ gần nhất.
+	measure 'Previous Hour Key' =
+			VAR _latest = [Latest Hour Key]
+			RETURN
+			    MAXX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] < _latest), 'Sales by Minute'[Hour Key])
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: e3d2d7ad-d618-4b3a-b56e-40ba5b1a21c7
+
+	/// Thay đổi của giờ đầy đủ gần nhất so với giờ trước (Revenue).
+	measure 'HoH Revenue' =
+			VAR _latest = [Latest Hour Key]
+			VAR _previous = [Previous Hour Key]
+			VAR _cur = CALCULATE([Minute Revenue], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _prev = CALCULATE([Minute Revenue], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _previous)
+			RETURN
+			    DIVIDE(_cur - _prev, _prev)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 0a7e58df-3b55-4724-907f-33d7e3e48a1c
+
+	/// Dòng chữ so sánh với giờ trước (Revenue).
+	measure 'HoH Revenue Text' =
+			VAR _x = [HoH Revenue]
+			RETURN
+			    IF(ISBLANK(_x), "Giờ trước  —", "Giờ trước  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: cb036f78-9c5f-405e-9d28-1de4ac4b802c
+
+	/// Màu chữ so sánh với giờ trước (Revenue): xanh khi tăng, cam khi giảm.
+	measure 'HoH Revenue Color' =
+			VAR _x = [HoH Revenue]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: bdbcb41c-e088-4763-aad4-714fab6465b0
+
+	/// Giờ đầy đủ gần nhất so với trung bình các giờ (Revenue).
+	measure 'VsAvg Revenue' =
+			VAR _latest = [Latest Hour Key]
+			VAR _cur = CALCULATE([Minute Revenue], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _avg = AVERAGEX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] <= _latest), CALCULATE([Minute Revenue]))
+			RETURN
+			    DIVIDE(_cur - _avg, _avg)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 955bd380-a5fb-40c2-a145-f0968143a8a6
+
+	/// Dòng chữ so sánh với trung bình giờ (Revenue).
+	measure 'VsAvg Revenue Text' =
+			VAR _x = [VsAvg Revenue]
+			RETURN
+			    IF(ISBLANK(_x), "TB giờ  —", "TB giờ  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 77e7151e-7e9f-4c77-939c-43bba76c9a43
+
+	/// Màu chữ so sánh với trung bình giờ (Revenue).
+	measure 'VsAvg Revenue Color' =
+			VAR _x = [VsAvg Revenue]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 63ac7088-0b49-46b3-b0b0-42354d3bf9c3
+
+	/// Thay đổi của giờ đầy đủ gần nhất so với giờ trước (Quantity).
+	measure 'HoH Quantity' =
+			VAR _latest = [Latest Hour Key]
+			VAR _previous = [Previous Hour Key]
+			VAR _cur = CALCULATE([Minute Quantity], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _prev = CALCULATE([Minute Quantity], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _previous)
+			RETURN
+			    DIVIDE(_cur - _prev, _prev)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 540f6fa8-5533-4dd8-ab76-25ac1352e491
+
+	/// Dòng chữ so sánh với giờ trước (Quantity).
+	measure 'HoH Quantity Text' =
+			VAR _x = [HoH Quantity]
+			RETURN
+			    IF(ISBLANK(_x), "Giờ trước  —", "Giờ trước  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 7daa60dd-35d1-456c-afb7-b6f770176db6
+
+	/// Màu chữ so sánh với giờ trước (Quantity): xanh khi tăng, cam khi giảm.
+	measure 'HoH Quantity Color' =
+			VAR _x = [HoH Quantity]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: b0d5eda1-a8d1-4ef7-805d-14629cc806ef
+
+	/// Giờ đầy đủ gần nhất so với trung bình các giờ (Quantity).
+	measure 'VsAvg Quantity' =
+			VAR _latest = [Latest Hour Key]
+			VAR _cur = CALCULATE([Minute Quantity], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _avg = AVERAGEX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] <= _latest), CALCULATE([Minute Quantity]))
+			RETURN
+			    DIVIDE(_cur - _avg, _avg)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: d166cbde-f36d-4b25-9ace-c2c80e6d6689
+
+	/// Dòng chữ so sánh với trung bình giờ (Quantity).
+	measure 'VsAvg Quantity Text' =
+			VAR _x = [VsAvg Quantity]
+			RETURN
+			    IF(ISBLANK(_x), "TB giờ  —", "TB giờ  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 9fcb032b-5c4a-4137-957b-f144edcb9d09
+
+	/// Màu chữ so sánh với trung bình giờ (Quantity).
+	measure 'VsAvg Quantity Color' =
+			VAR _x = [VsAvg Quantity]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: b091608d-cbbf-4400-9bff-553a84e9056c
+
+	/// Thay đổi của giờ đầy đủ gần nhất so với giờ trước (Transactions).
+	measure 'HoH Transactions' =
+			VAR _latest = [Latest Hour Key]
+			VAR _previous = [Previous Hour Key]
+			VAR _cur = CALCULATE([Minute Transactions], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _prev = CALCULATE([Minute Transactions], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _previous)
+			RETURN
+			    DIVIDE(_cur - _prev, _prev)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 42002083-1577-4af7-a1f3-f3e87b4697de
+
+	/// Dòng chữ so sánh với giờ trước (Transactions).
+	measure 'HoH Transactions Text' =
+			VAR _x = [HoH Transactions]
+			RETURN
+			    IF(ISBLANK(_x), "Giờ trước  —", "Giờ trước  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: af37e9f8-6e99-4c87-aa68-b094159184ca
+
+	/// Màu chữ so sánh với giờ trước (Transactions): xanh khi tăng, cam khi giảm.
+	measure 'HoH Transactions Color' =
+			VAR _x = [HoH Transactions]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 9b28312b-93cd-438d-8e55-1d3b76fa7fe3
+
+	/// Giờ đầy đủ gần nhất so với trung bình các giờ (Transactions).
+	measure 'VsAvg Transactions' =
+			VAR _latest = [Latest Hour Key]
+			VAR _cur = CALCULATE([Minute Transactions], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _avg = AVERAGEX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] <= _latest), CALCULATE([Minute Transactions]))
+			RETURN
+			    DIVIDE(_cur - _avg, _avg)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: b6d48a76-9c1a-456a-9de1-7fc678f7ad6f
+
+	/// Dòng chữ so sánh với trung bình giờ (Transactions).
+	measure 'VsAvg Transactions Text' =
+			VAR _x = [VsAvg Transactions]
+			RETURN
+			    IF(ISBLANK(_x), "TB giờ  —", "TB giờ  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: a569ad6d-2abc-4e4f-9126-403abed2dffb
+
+	/// Màu chữ so sánh với trung bình giờ (Transactions).
+	measure 'VsAvg Transactions Color' =
+			VAR _x = [VsAvg Transactions]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 59d41ae8-399c-46c8-b50d-c62e709ba280
+
+	/// Thay đổi của giờ đầy đủ gần nhất so với giờ trước (Avg Transaction).
+	measure 'HoH Avg Transaction' =
+			VAR _latest = [Latest Hour Key]
+			VAR _previous = [Previous Hour Key]
+			VAR _cur = CALCULATE([Minute Avg Transaction], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _prev = CALCULATE([Minute Avg Transaction], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _previous)
+			RETURN
+			    DIVIDE(_cur - _prev, _prev)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 7de6b973-4952-4aa6-b069-c57bd3996da4
+
+	/// Dòng chữ so sánh với giờ trước (Avg Transaction).
+	measure 'HoH Avg Transaction Text' =
+			VAR _x = [HoH Avg Transaction]
+			RETURN
+			    IF(ISBLANK(_x), "Giờ trước  —", "Giờ trước  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 2106865f-4b69-44bd-a01e-eb52a182799e
+
+	/// Màu chữ so sánh với giờ trước (Avg Transaction): xanh khi tăng, cam khi giảm.
+	measure 'HoH Avg Transaction Color' =
+			VAR _x = [HoH Avg Transaction]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 7c0fdb79-9021-4c31-a30f-2749e2212183
+
+	/// Giờ đầy đủ gần nhất so với trung bình các giờ (Avg Transaction).
+	measure 'VsAvg Avg Transaction' =
+			VAR _latest = [Latest Hour Key]
+			VAR _cur = CALCULATE([Minute Avg Transaction], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _avg = AVERAGEX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] <= _latest), CALCULATE([Minute Avg Transaction]))
+			RETURN
+			    DIVIDE(_cur - _avg, _avg)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 11a9c6a0-b8f7-40e6-8624-4f1c3f867d69
+
+	/// Dòng chữ so sánh với trung bình giờ (Avg Transaction).
+	measure 'VsAvg Avg Transaction Text' =
+			VAR _x = [VsAvg Avg Transaction]
+			RETURN
+			    IF(ISBLANK(_x), "TB giờ  —", "TB giờ  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 51f3b70e-a02c-4781-9cbb-6ba5ebb77bb4
+
+	/// Màu chữ so sánh với trung bình giờ (Avg Transaction).
+	measure 'VsAvg Avg Transaction Color' =
+			VAR _x = [VsAvg Avg Transaction]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 51fdc6db-501c-410b-8cba-acf6280c8c47
+
+	/// Thay đổi của giờ đầy đủ gần nhất so với giờ trước (Avg per Hour).
+	measure 'HoH Avg per Hour' =
+			VAR _latest = [Latest Hour Key]
+			VAR _previous = [Previous Hour Key]
+			VAR _cur = CALCULATE([Avg Revenue per Hour], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _prev = CALCULATE([Avg Revenue per Hour], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _previous)
+			RETURN
+			    DIVIDE(_cur - _prev, _prev)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 89684100-db58-4610-ab5e-721222692709
+
+	/// Dòng chữ so sánh với giờ trước (Avg per Hour).
+	measure 'HoH Avg per Hour Text' =
+			VAR _x = [HoH Avg per Hour]
+			RETURN
+			    IF(ISBLANK(_x), "Giờ trước  —", "Giờ trước  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: c22ba2b9-7d8a-46e0-a9a9-9c7010ebef32
+
+	/// Màu chữ so sánh với giờ trước (Avg per Hour): xanh khi tăng, cam khi giảm.
+	measure 'HoH Avg per Hour Color' =
+			VAR _x = [HoH Avg per Hour]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 55436997-eca4-4a24-a8cd-aec5334c2998
+
+	/// Giờ đầy đủ gần nhất so với trung bình các giờ (Avg per Hour).
+	measure 'VsAvg Avg per Hour' =
+			VAR _latest = [Latest Hour Key]
+			VAR _cur = CALCULATE([Avg Revenue per Hour], REMOVEFILTERS('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] = _latest)
+			VAR _avg = AVERAGEX(FILTER(ALLSELECTED('Sales by Minute'[Hour Key]), 'Sales by Minute'[Hour Key] <= _latest), CALCULATE([Avg Revenue per Hour]))
+			RETURN
+			    DIVIDE(_cur - _avg, _avg)
+		formatString: 0.0%
+		isHidden
+		displayFolder: Compare
+		lineageTag: 5438f429-7c91-40ae-b13e-f3a9c8ed2650
+
+	/// Dòng chữ so sánh với trung bình giờ (Avg per Hour).
+	measure 'VsAvg Avg per Hour Text' =
+			VAR _x = [VsAvg Avg per Hour]
+			RETURN
+			    IF(ISBLANK(_x), "TB giờ  —", "TB giờ  " & IF(_x >= 0, "▲ ", "▼ ") & FORMAT(ABS(_x), "0.0%"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 51ffdc9c-8f54-446f-a474-03b1bdd691ba
+
+	/// Màu chữ so sánh với trung bình giờ (Avg per Hour).
+	measure 'VsAvg Avg per Hour Color' =
+			VAR _x = [VsAvg Avg per Hour]
+			RETURN
+			    IF(ISBLANK(_x), "#7C8FA3", IF(_x >= 0, "#2E9E6B", "#E0643C"))
+		formatString: General
+		isHidden
+		displayFolder: Compare
+		lineageTag: 41165e49-708a-443b-a1f2-44a2bf5abf8c
+
+	/// Khóa cửa hàng, dùng để nối với bảng Store.
+	column 'Store ID'
+		dataType: string
+		isHidden
+		lineageTag: 424af522-c2f5-439e-b8bb-d28ba79bd846
+		summarizeBy: none
+		sourceColumn: store_id
+
+	/// Ngày (UTC) của phút bán hàng. Dữ liệu mô phỏng nằm trong 01–03/01/2024.
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 7c59d35e-1796-4987-81aa-f270aa2b580b
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 3efdea7f-a14b-43af-85a4-341a47f1dc55
+			defaultHierarchy: LocalDateTable_0dc01281-4d10-471a-9e70-c0ff44c3a548.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Giờ trong ngày (UTC) dạng HH:00, ví dụ 09:00.
+	column Hour
+		dataType: string
+		lineageTag: 6c341183-57f2-4e2f-8c56-6169ddb4d199
+		summarizeBy: none
+		sourceColumn: Hour
+
+	column 'Transaction Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 43a0338f-d2d9-4792-9808-e474f606625f
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Quantity'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6474e5eb-2720-4cf0-9ecf-5743070df629
+		summarizeBy: sum
+		sourceColumn: total_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Revenue'
+		dataType: decimal
+		isHidden
+		formatString: #,##0.00
+		lineageTag: 7087fc37-244f-448e-a446-5d52a5327a1b
+		summarizeBy: sum
+		sourceColumn: total_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Khóa giờ dạng yyyy-MM-dd HH:00, dùng để xác định giờ đầy đủ gần nhất và giờ trước đó.
+	column 'Hour Key'
+		dataType: string
+		isHidden
+		lineageTag: 4d87f214-8c8e-4f80-8020-76817bb3bbeb
+		summarizeBy: none
+		sourceColumn: Hour Key
+
+	partition 'Sales by Minute' = m
+		mode: import
+		source =
+				let
+					// Đọc bảng doanh thu theo phút, chỉ giữ một run.
+					Source = PostgreSQL.Database(#"Server", #"Database"),
+					#"Navigated to minute sales" = Source{[Schema = "public", Item = "sales_by_store_minute"]}[Data],
+					#"Filtered to selected run" = Table.SelectRows(#"Navigated to minute sales", each [run_id] = #"Run ID"),
+					// Giữ thời gian ở UTC: bỏ múi giờ nếu cột được đọc dạng datetimezone.
+					#"Converted start to UTC" = Table.TransformColumns(#"Filtered to selected run", {{"window_start", each if Value.Is(_, type datetimezone) then DateTimeZone.RemoveZone(DateTimeZone.SwitchZone(_, 0)) else _, type datetime}}),
+					#"Added date column" = Table.AddColumn(#"Converted start to UTC", "Date", each DateTime.Date([window_start]), type date),
+					#"Added hour column" = Table.AddColumn(#"Added date column", "Hour", each Text.PadStart(Text.From(Time.Hour(DateTime.Time([window_start]))), 2, "0") & ":00", type text),
+					// Khóa giờ yyyy-MM-dd HH:00 để so sánh giờ gần nhất với giờ trước.
+					#"Added hour key column" = Table.AddColumn(#"Added hour column", "Hour Key", each Date.ToText([Date], "yyyy-MM-dd") & " " & [Hour], type text),
+					#"Selected minute columns" = Table.SelectColumns(#"Added hour key column", {"store_id", "Date", "Hour", "Hour Key", "transaction_count", "total_quantity", "total_revenue"}),
+					#"Changed column types" = Table.TransformColumnTypes(#"Selected minute columns", {{"transaction_count", Int64.Type}, {"total_quantity", Int64.Type}, {"total_revenue", Currency.Type}})
+				in
+					#"Changed column types"
+
