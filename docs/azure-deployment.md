@@ -1,6 +1,6 @@
 # Nhật ký triển khai Azure
 
-**Cập nhật:** 17–18/11/2026. **Trạng thái triển khai Azure: PENDING.** Mỗi bước dưới đây ghi: làm gì, vào đâu để xem, trường cần điền, tên đặt, kết quả thực tế và minh chứng cần chụp. Không ghi subscription ID, tenant ID, email, mật khẩu hay connection string vào file này; khi chụp ảnh phải che các thông tin đó.
+**Cập nhật:** 17–19/11/2026. **Trạng thái triển khai Azure: bước 0–10 PASS, bước 11 mới xong phần bật/tắt (chưa dọn dẹp), bước 12 PASS.** Mỗi bước dưới đây ghi: làm gì, vào đâu để xem, trường cần điền, tên đặt, kết quả thực tế và minh chứng cần chụp. Không ghi subscription ID, tenant ID, email, mật khẩu hay connection string vào file này; khi chụp ảnh phải che các thông tin đó.
 
 **Nguyên tắc làm việc (đã thống nhất):**
 - Trước mọi thao tác trên Azure phải nêu rõ việc sẽ làm và được người phụ trách Azure duyệt rồi mới chạy.
@@ -32,14 +32,15 @@
 | 1 | Đăng ký provider Compute, PostgreSQL, Network | PASS |
 | 2 | Kiểm quota, SKU, giá, chọn region | PASS khảo sát; PostgreSQL chưa xác nhận lúc tạo |
 | 3 | Tạo resource group | PASS (18/11/2026) |
-| 4 | Thêm thành viên vào resource group | Đã mời và gán quyền (18/11/2026); chờ thành viên chấp nhận lời mời |
+| 4 | Thêm thành viên vào resource group | Đã mời và gán Contributor (18/11/2026); hai thành viên báo đã xác nhận có quyền (19/11/2026); **chưa có ảnh minh chứng** |
 | 5 | Đặt ngân sách và cảnh báo chi phí | PASS (18/11/2026) |
-| 6 | Tạo mạng, VM | PASS (19/11/2026); VM đang chạy, **đang tính tiền** |
-| 7 | Tạo PostgreSQL, firewall, chạy schema | PASS (19/11/2026); server đã dừng (còn tính storage) |
+| 6 | Tạo mạng, VM | PASS (19/11/2026); VM đã tắt (còn tính ổ đĩa và IP) |
+| 7 | Tạo PostgreSQL, firewall, chạy schema | PASS (19/11/2026); server **đang chạy từ 22:47, đang tính tiền** (bật để làm dashboard) |
 | 8 | Tạo Blob Storage | PASS (19/11/2026) |
 | 9 | Dựng stack trên VM và chạy pipeline | PASS (19/11/2026) cho lượt 1.000 dòng |
 | 10 | Chạy lại 11 test case trên cloud | PASS (19/11/2026), 11/11 |
-| 11 | Quy trình bật/tắt và dọn dẹp | Phần bật/tắt: PASS (19/11/2026), đã tắt VM và PostgreSQL; phần dọn dẹp: chưa làm (chỉ khi kết thúc và được duyệt) |
+| 11 | Quy trình bật/tắt và dọn dẹp | Phần bật/tắt: PASS (19/11/2026); phần dọn dẹp: chưa làm (chỉ khi kết thúc và được duyệt) |
+| 12 | Tài khoản chỉ đọc cho dashboard | PASS (19/11/2026) |
 
 ---
 
@@ -142,7 +143,7 @@
 - **Kết quả (18/11/2026): PASS.** Tạo budget `budget-retail` ở phạm vi subscription qua Azure Resource Manager (`Microsoft.Consumption/budgets`): 80 USD/tháng, hiệu lực 01/11/2026–01/11/2027, ba cảnh báo (Actual >50%, Actual >80%, Forecasted >100%) gửi tới email tài khoản chủ subscription. Đọc lại từ Azure thấy đủ ba cảnh báo `enabled=True`; chi phí hiện tại 0,00 USD. Budget chỉ cảnh báo, không tự dừng resource; dữ liệu chi phí có thể trễ vài giờ.
 - **Minh chứng:** ảnh trang Budgets (che email).
 
-## Bước 6. Tạo mạng và VM (chưa làm)
+## Bước 6. Tạo mạng và VM
 
 - **Vào đâu (Portal):** Virtual machines → **Create → Azure virtual machine**.
 - **Trường đề xuất:**
@@ -166,7 +167,7 @@
 - **Việc sau khi tạo:** cài Docker, kéo repo, tạo `.env` trên VM (không commit), dựng stack.
 - **Minh chứng:** ảnh Overview của VM và trang Networking (che IP nếu cần).
 
-## Bước 7. Tạo PostgreSQL (chưa làm)
+## Bước 7. Tạo PostgreSQL
 
 - **Vào đâu (Portal):** Azure Database for PostgreSQL flexible servers → **Create**.
 - **Trường đề xuất:**
@@ -189,15 +190,15 @@
   - Server `psql-retail-ea-7476`: trạng thái Ready, PostgreSQL 17.11, Burstable `Standard_B1ms`, 32 GB, không High availability, không geo-redundant backup, backup giữ 7 ngày, `require_secure_transport=on`, tag `env=dev`/`project=retail-analytics`.
   - Lỗi gặp khi dùng Azure CLI 2.93.0: `--high-availability Disabled` và `--database-name` không dùng được với `flexible-server create` (cả hai chỉ áp dụng cho trường hợp khác); bỏ hai tham số, rồi tạo database bằng `az postgres flexible-server db create --server-name ... --name retail_analytics`. Các lệnh con `firewall-rule` và `db` dùng `--server-name` (không phải `-n`) cho tên server.
   - Firewall: một rule cho IP máy người phụ trách (tạo cùng server) và `allow-vm-retail` cho IP tĩnh của VM. Không có rule "cho tất cả".
-  - Database `retail_analytics`; đã chạy `01_schema.sql` và `03_indexes.sql` bằng tài khoản admin: đủ 6 bảng (`pipeline_runs`, `products`, `sales_by_store`, `sales_by_store_minute`, `sales_by_store_product`, `stores`). Chưa chạy seed dimension.
+  - Database `retail_analytics`; đã chạy `01_schema.sql` và `03_indexes.sql` bằng tài khoản admin: đủ 6 bảng (`pipeline_runs`, `products`, `sales_by_store`, `sales_by_store_minute`, `sales_by_store_product`, `stores`). Seed dimension chạy ở bước 9.
   - Tài khoản ứng dụng `retail_app` (quyền SELECT/INSERT/UPDATE/DELETE trên schema `public`, không có quyền tạo bảng): kiểm thực tế đọc được, ghi được (đã rollback), tạo bảng bị từ chối.
   - Mật khẩu admin và ứng dụng sinh ngẫu nhiên, lưu trong `.env` local (gitignore) với các khóa `AZURE_PG_*`; không ghi vào tài liệu.
 - **Khoản tính tiền từ bước này:** compute `B1ms` khoảng 0,0286 USD/giờ khi chạy; storage 32 GB khoảng 4,8 USD/tháng; backup trong hạn mức đi kèm storage (chưa xác minh). Server vẫn tính compute cho đến khi dừng (`az postgres flexible-server stop`).
-- **Việc còn lại:** seed dimension, kiểm tra kết nối từ VM, đổi Flink JDBC sink sang server này.
+- **Đã xong ở các bước sau:** seed dimension, kết nối từ VM và Flink JDBC sink ghi vào server này (bước 9–10).
 - **Kết nối Power BI sau này:** cần rule firewall cho dịch vụ Power BI; xử lý ở giai đoạn dashboard.
 - **Minh chứng:** ảnh Overview và Networking của server (che tên và IP nếu cần).
 
-## Bước 8. Tạo Blob Storage (chưa làm)
+## Bước 8. Tạo Blob Storage
 
 - **Vào đâu (Portal):** Storage accounts → **Create**.
 - **Trường đề xuất:** Resource group `rg-retail-analytics`; Storage account name `stretailea<số ngẫu nhiên>`; Region East Asia; Performance Standard; Redundancy LRS; Access tier Hot; tắt Allow Blob anonymous access. Tạo container `benchmark-data` và `manifests` (Public access level: Private).
@@ -227,8 +228,7 @@
 - **Thay đổi runner (chưa commit):** thêm chế độ cloud khi đặt `PG_HOST`, `PG_USER`, `PG_PASSWORD` (hàm `pg()` chạy psql qua `postgres:17-alpine` với SSL, bỏ kiểm tra container postgres, TC08 bỏ qua). Mặc định vẫn là PostgreSQL local.
 - **Giới hạn (giữ nguyên từ bản local):** chưa có bộ đếm late event trực tiếp; không chứng minh exactly-once; TC06 chỉ là tiếp tục có kiểm soát sau khi đã nhận ACK; kiểm thử này không phải benchmark trên 4 GB hay đo độ trễ hai region.
 - **Chưa kiểm:** thử restart Flink job liên tục dài ngày; chi phí thực tế (xem Cost Management).
-- Chạy lại ma trận 11 test case GĐ07 (`tests/integration/run_stage07.py`) và so với kết quả local. Ghi chú: runner hiện tìm PostgreSQL trong container local, cần điều chỉnh khi DB nằm ở Azure.
-- Minh chứng: log đối soát đã che bí mật, ảnh Flink UI, bảng expected/actual.
+- **Minh chứng nên chụp thêm khi làm báo cáo:** ảnh Flink UI (job FINISHED) và bảng expected/actual đã che thông tin nhạy cảm.
 
 ## Bước 11. Bật/tắt và dọn dẹp
 
@@ -241,6 +241,8 @@ az postgres flexible-server stop -g rg-retail-analytics -n <tên server>
 ```
 Kiểm tra: VM hiện `VM deallocated`, PostgreSQL hiện `Stopped`. Máy chạy từ 21:59 đến 22:23, ước tính khoảng 0,05 USD compute (0,105 + 0,0286 USD/giờ, giá công khai).
 
+**Rà soát sau lần tắt thứ hai (19/11/2026, 23:04):** PostgreSQL bật lại 22:47 để làm dashboard rồi dừng 23:04 (khoảng 17 phút compute). Rà toàn bộ subscription: hai resource group (`rg-retail-analytics` và `NetworkWatcherRG` do Azure tự tạo, Network Watcher không tính phí); chỉ 1 VM (`VM deallocated`), 1 server PostgreSQL (`Stopped`), 1 đĩa (`Reserved`, đang gắn với VM đã dừng), 1 public IP tĩnh, 1 storage account. Không có NAT gateway, load balancer, Application Gateway, VPN gateway, firewall, Bastion, Log Analytics, App Service, AKS hay SQL server. Firewall PostgreSQL có 2 rule, đều là một IP cụ thể (không có rule mở rộng); NSG chỉ có rule SSH nguồn `/32`; Blob tắt truy cập công khai. Chi phí hiện tại trên budget 0,00 USD (dữ liệu chi phí trễ vài giờ). Nếu để PostgreSQL dừng lâu, kiểm tra trạng thái sau khoảng 7 ngày (khoảng 26/11/2026) vì Azure có thể tự bật lại.
+
 **Khoản vẫn tính khi đã tắt (ước tính từ giá công khai, chưa phải hóa đơn):** ổ OS 64 GB khoảng 4,8 USD/tháng; public IP tĩnh khoảng 3,6 USD/tháng (chưa xác minh giá); storage PostgreSQL 32 GB khoảng 4,8 USD/tháng; Blob gần như 0 khi chưa có dữ liệu. Tổng cố định khoảng 13–15 USD/tháng. VNet, NSG, giao diện mạng miễn phí. Azure có thể tự bật lại PostgreSQL sau khoảng 7 ngày dừng liên tục (chưa xác minh trên gói này): nếu để lâu cần kiểm tra trạng thái.
 
 **Bật lại:**
@@ -251,3 +253,12 @@ az postgres flexible-server start -g rg-retail-analytics -n <tên server>
 Sau khi VM chạy lại, các container không tự khởi động. Trên VM chạy: `cd ~/retail && sudo docker compose --env-file .env -f docker/compose.yaml up -d kafka-init flink-jobmanager flink-taskmanager`. IP của VM giữ nguyên (tĩnh). Nếu IP máy người phụ trách đổi thì SSH bị chặn: cập nhật nguồn của rule `allow-ssh-admin` trong `nsg-retail-ea` và rule firewall của PostgreSQL.
 
 **Dọn dẹp (chưa làm, chỉ khi kết thúc và được người phụ trách duyệt):** xóa toàn bộ bằng `az group delete --name rg-retail-analytics` (xóa VM, ổ đĩa, IP, PostgreSQL và Blob cùng dữ liệu, không khôi phục được). Trước khi xóa: xuất dữ liệu cần giữ, lưu ảnh và log minh chứng, xác nhận không còn việc cần dùng cloud.
+
+## Bước 12. Tài khoản chỉ đọc cho dashboard
+
+- **Làm gì:** tạo tài khoản PostgreSQL `retail_reader` chỉ có quyền SELECT để Power BI dùng, thay vì dùng `retail_app` (có quyền ghi) hay `retail_admin`.
+- **Vào đâu:** kết nối bằng `psql` (client `postgres:17-alpine` qua Docker) vào Azure PostgreSQL bằng tài khoản admin, chạy trong database `retail_analytics`.
+- **Đã làm (19/11/2026):** bật lại PostgreSQL lúc 22:47 (trạng thái Ready; IP máy người phụ trách vẫn nằm trong firewall). Tạo role `retail_reader` có `LOGIN`, `GRANT CONNECT` trên database, `GRANT USAGE` trên schema `public`, `GRANT SELECT` trên mọi bảng hiện có và `ALTER DEFAULT PRIVILEGES FOR ROLE retail_admin ... GRANT SELECT` cho bảng tạo sau này. Mật khẩu sinh ngẫu nhiên, lưu trong `.env` local (khóa `AZURE_PG_READER_USER`, `AZURE_PG_READER_PASSWORD`), không ghi vào tài liệu.
+- **Kết quả: PASS.** Kiểm bằng chính tài khoản này: `SELECT` đọc được các run (ví dụ `s07_efde7a9e73_tenk`: 5 cửa hàng, doanh thu 2.983.773,00), còn `INSERT`, `UPDATE` và `CREATE TABLE` đều bị `permission denied`.
+- **Dùng cho Power BI:** server `<tên server>.postgres.database.azure.com`, cổng 5432, database `retail_analytics`, SSL bật, user `retail_reader`. Lọc `run_id` theo một run (database có nhiều run, cộng tất cả sẽ nhân đôi số liệu).
+- **Chưa làm:** gán `store_region` cho cửa hàng (cột đang trống; cần cho phân quyền theo vùng); mở đường cho Power BI Service refresh tự động.

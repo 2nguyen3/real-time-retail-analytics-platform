@@ -3,7 +3,8 @@ name: retail-local
 x-flink-properties: &flink-properties |
   jobmanager.rpc.address: flink-jobmanager
   jobmanager.memory.process.size: 1024m
-  taskmanager.memory.process.size: 1536m
+  taskmanager.memory.process.size: ${FLINK_TM_PROCESS_MEMORY:-1536m}
+  taskmanager.memory.managed.fraction: ${FLINK_TM_MANAGED_FRACTION:-0.4}
   taskmanager.numberOfTaskSlots: 2
   parallelism.default: 2
   state.checkpoints.dir: file:///opt/flink/checkpoints
@@ -41,7 +42,7 @@ services:
       KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: "1"
       KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: "1"
       KAFKA_LOG_RETENTION_HOURS: "6"
-      KAFKA_LOG_RETENTION_BYTES: "134217728"
+      KAFKA_LOG_RETENTION_BYTES: "${KAFKA_LOG_RETENTION_BYTES:-134217728}"
       KAFKA_LOG_SEGMENT_BYTES: "16777216"
       KAFKA_HEAP_OPTS: -Xms256m -Xmx768m
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
@@ -111,7 +112,7 @@ services:
         condition: service_completed_successfully
       flink-jobmanager:
         condition: service_started
-    mem_limit: 1792m
+    mem_limit: ${FLINK_TM_MEM_LIMIT:-1792m}
     networks: [retail]
 
   postgres:

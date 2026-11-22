@@ -55,6 +55,8 @@ def submit(name: str, start: Path, end: Path | None, restore_path: str | None) -
     sql = render_setup(name, start, end, restore_path, group_prefix="flink-stage06")
     if end is not None:
         sql += "SET 'table.dml-sync' = 'true';\n"
+    template = template.replace("'sink.buffer-flush.max-rows' = '100'",
+                                f"'sink.buffer-flush.max-rows' = '{int(os.environ.get('JDBC_FLUSH_MAX_ROWS', '100'))}'")
     sql += template.replace("{{JDBC_URL}}", sql_quote(url)).replace(
         "{{JDBC_USER}}", sql_quote(username)).replace("{{JDBC_PASSWORD}}", sql_quote(password))
     remote = f"/tmp/stage06_{name}.sql"
@@ -77,7 +79,7 @@ def submit(name: str, start: Path, end: Path | None, restore_path: str | None) -
             submitted_at_ms = int(time.time() * 1000)
             result = subprocess.run(
                 ["docker", "exec", CONTAINER, "/opt/flink/bin/sql-client.sh", "-f", remote],
-                capture_output=True, timeout=180,
+                capture_output=True, timeout=int(os.environ.get("JDBC_SUBMIT_TIMEOUT", "180")),
             )
         output = (result.stdout + result.stderr).decode("utf-8", errors="replace")
         sanitized = output.replace(password, "<redacted>").replace(sql_quote(password), "<redacted>")

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -57,12 +58,13 @@ def render_setup(name: str, start: Path, end: Path | None, restore_path: str | N
     common = "\n".join((HERE / file).read_text(encoding="utf-8") for file in
                        ("02_clean.sql", "03_aggregates.sql", "04_windows.sql"))
     settings = """SET 'sql-client.execution.result-mode' = 'tableau';
-SET 'parallelism.default' = '1';
-SET 'table.exec.source.idle-timeout' = '5 s';
+SET 'parallelism.default' = '{parallelism}';
+SET 'table.exec.source.idle-timeout' = '{idle}';
 SET 'table.exec.state.ttl' = '1 h';
 SET 'execution.checkpointing.interval' = '10 s';
 SET 'execution.checkpointing.dir' = 'file:///opt/flink/checkpoints';
-"""
+""".replace("{parallelism}", os.environ.get("FLINK_PARALLELISM", "1")).replace(
+        "{idle}", os.environ.get("FLINK_SOURCE_IDLE_TIMEOUT", "5 s"))
     if restore_path is not None:
         if not re.fullmatch(
             r"file:/opt/flink/checkpoints/savepoints/savepoint-[A-Za-z0-9-]+", restore_path
