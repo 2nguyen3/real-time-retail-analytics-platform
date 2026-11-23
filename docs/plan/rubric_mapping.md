@@ -6,12 +6,12 @@
 |---|---|---:|---|---|---|---|
 | R01 | Giới thiệu loại bài toán: lưu trữ, thu thập, trực quan, xử lý | 0,25 | 01, 12 | `architecture.md`, phần giới thiệu báo cáo | Sơ đồ và mô tả bốn nhóm trong báo cáo được rà soát | PENDING |
 | R02 | Loại dữ liệu | 0,25 | 02, 12 | Data dictionary, nguồn dataset, ví dụ giao dịch, bảng DB | File nguồn/provenance và dữ liệu mẫu có thể kiểm tra | PENDING |
-| R03 | Kích thước dữ liệu và dung lượng bộ nhớ cho xử lý; mức >4 GB, so sánh truyền thống/cloud | 0,75 | 02, 10–11 | Manifest, workload đối chiếu, số đo RAM/CPU/disk | Tổng bytes >4 GB, số dòng Flink thực xử lý và kết quả so sánh có log | PENDING |
+| R03 | Kích thước dữ liệu và dung lượng bộ nhớ cho xử lý; mức >4 GB, so sánh truyền thống/cloud | 0,75 | 02, 10–11 | Manifest, workload đối chiếu, số đo RAM/CPU/disk | Tổng bytes >4 GB, số dòng Flink thực xử lý và kết quả so sánh có log | PASS về số đo (22–23/11/2026): 12 chunk, 4,998 GiB trên cloud (`docs/evidence/10-cloud-volume-*`); so sánh local–cloud cùng workload, ba lượt mỗi bên (`docs/evidence/10-local-vs-cloud-comparison.md`). Dữ liệu synthetic, giảng viên chưa xác nhận bằng văn bản |
 | R04 | Liệt kê và phân loại các thành phần cloud: IaaS, PaaS, FaaS, SaaS | 0,25 | 01, 08, 12 | Bảng phân loại trong kiến trúc và báo cáo | Dịch vụ thực tế, ảnh resource, nêu FaaS không dùng | PENDING |
 | R05 | Cơ sở lý thuyết về định dạng lưu trữ | 0,50 | 02, 12 | CSV/JSON/PostgreSQL/Blob, lý do lựa chọn | Tài liệu lý thuyết gắn với dữ liệu và cấu hình thật | PENDING |
 | R06 | Cơ sở lý thuyết về thuật toán xử lý | 0,50 | 05–07, 12 | Mô tả lọc, dedup, window/watermark, aggregate | Dataflow, SQL, ví dụ expected/actual | PENDING |
 | R07 | Trình bày chi tiết các dịch vụ sử dụng cloud | 0,50 | 08, 12 | Deployment, cấu hình, mạng, region, cost | Ảnh resource và cấu hình đã tạo, mô tả trong báo cáo | PENDING |
-| R08 | Tốc độ cho phép đọc ghi | 0,50 | 10–11 | Benchmark Kafka/Flink/DB, query latency | Ba lần đo, throughput, p50/p95, log và cấu hình | PENDING |
+| R08 | Tốc độ cho phép đọc ghi | 0,50 | 10–11 | Benchmark Kafka/Flink/DB, query latency | Ba lần đo, throughput, p50/p95, log và cấu hình | PASS (cloud, 22–23/11/2026): ba lượt `repeat` 1 triệu dòng, đối soát PASS, bằng chứng `docs/evidence/10-cloud-repeat-*` |
 | R09 | Thiết lập luồng xử lý dữ liệu tự động ETL | 0,50 | 04–07 | Producer → Kafka → Flink → PostgreSQL | Demo tự động và đối soát SQL không chuyển file thủ công | PENDING |
 | R10 | Đo độ trễ khi thiết lập server ở region khác | 0,50 | 08, 11 | Hai VM/region cùng workload, DB cố định | Region, timestamp, RTT và query latency p50/p95 | PENDING |
 | R11 | Giải pháp tối ưu lưu trữ và cải thiện đọc ghi từ vùng lưu trữ sang ứng dụng | 0,50 | 11 | A/B một biến, đo Blob → reader hoặc DB → BI | Baseline/sau tối ưu, throughput/latency và đánh đổi | PENDING |

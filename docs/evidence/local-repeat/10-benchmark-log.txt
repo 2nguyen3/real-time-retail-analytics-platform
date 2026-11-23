@@ -1,0 +1,16 @@
+2026-11-23T11:18:55Z PREFLIGHT PASS (free disk 129 GB)
+2026-11-23T11:18:55Z loc_1_11231118: publish 1000000 rows (447205234 bytes)
+2026-11-23T11:43:44Z loc_1_11231118: Flink bounded job
+2026-11-23T11:57:00Z loc_1_11231118: reconcile with source file
+2026-11-23T11:57:51Z loc_1_11231118: query latency (30 runs per query)
+2026-11-23T11:57:56Z loc_1_11231118: PASS publish 1352.4 rows/s, flink 1328.3 rows/s
+2026-11-23T11:57:56Z loc_2_11231118: publish 1000000 rows (447205234 bytes)
+2026-11-23T12:14:10Z loc_2_11231118: Flink bounded job
+2026-11-23T12:19:10Z loc_2_11231118: reconcile with source file
+2026-11-23T12:19:29Z loc_2_11231118: query latency (30 runs per query)
+2026-11-23T12:19:33Z loc_2_11231118: PASS publish 2558.5 rows/s, flink 3583.1 rows/s
+2026-11-23T12:19:33Z loc_3_11231118: publish 1000000 rows (447205234 bytes)
+2026-11-23T12:26:45Z loc_3_11231118: Flink bounded job
+2026-11-23T12:31:34Z loc_3_11231118: reconcile with source file
+2026-11-23T12:31:51Z loc_3_11231118: query latency (30 runs per query)
+2026-11-23T12:31:54Z loc_3_11231118: PASS publish 4274.4 rows/s, flink 3730.6 rows/s
