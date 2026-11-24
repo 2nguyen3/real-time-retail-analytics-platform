@@ -13,7 +13,7 @@
 | R07 | Trình bày chi tiết các dịch vụ sử dụng cloud | 0,50 | 08, 12 | Deployment, cấu hình, mạng, region, cost | Ảnh resource và cấu hình đã tạo, mô tả trong báo cáo | PENDING |
 | R08 | Tốc độ cho phép đọc ghi | 0,50 | 10–11 | Benchmark Kafka/Flink/DB, query latency | Ba lần đo, throughput, p50/p95, log và cấu hình | PASS (cloud, 22–23/11/2026): ba lượt `repeat` 1 triệu dòng, đối soát PASS, bằng chứng `docs/evidence/10-cloud-repeat-*` |
 | R09 | Thiết lập luồng xử lý dữ liệu tự động ETL | 0,50 | 04–07 | Producer → Kafka → Flink → PostgreSQL | Demo tự động và đối soát SQL không chuyển file thủ công | PENDING |
-| R10 | Đo độ trễ khi thiết lập server ở region khác | 0,50 | 08, 11 | Hai VM/region cùng workload, DB cố định | Region, timestamp, RTT và query latency p50/p95 | PENDING |
+| R10 | Đo độ trễ khi thiết lập server ở region khác | 0,50 | 08, 11 | Hai VM/region cùng workload, DB cố định | Region, timestamp, RTT và query latency p50/p95 | PASS về số đo (24/11/2026): hai VM cùng SKU ở East Asia và India South Central, DB cố định, ba lượt mỗi VM, RTT và p50/p95 (`docs/evidence/11-*`); chưa có ảnh Portal, chưa đo throughput ghi qua vùng xa |
 | R11 | Giải pháp tối ưu lưu trữ và cải thiện đọc ghi từ vùng lưu trữ sang ứng dụng | 0,50 | 11 | A/B một biến, đo Blob → reader hoặc DB → BI | Baseline/sau tối ưu, throughput/latency và đánh đổi | PENDING |
 | R12 | Deploy dashboard SaaS, ít nhất bốn report | 0,75 | 09 | Bốn report online: tổng quan, chi tiết, hai report có bộ lọc | URL và ảnh bốn report riêng dưới tài khoản Viewer | PENDING |
 | R13 | Button/navigation giữa các report | 0,25 | 09 | Liên kết điều hướng qua bốn report | Video click thực dưới quyền Viewer | PENDING |

@@ -1,0 +1,22 @@
+2026-11-24T04:26:13Z round 1: region=eastasia sku=Standard_B2as_v2
+2026-11-24T04:26:23Z   tcp_connect: p50 4.49 ms, p95 8.89 ms (n=50)
+2026-11-24T04:26:25Z   select_1: p50 0.96 ms, p95 1.41 ms (n=30)
+2026-11-24T04:26:39Z   revenue_by_store: p50 319.1 ms, p95 496.61 ms (n=30)
+2026-11-24T04:26:39Z   top_products: p50 1.5 ms, p95 2.64 ms (n=30)
+2026-11-24T04:26:39Z   minute_window_1d: p50 3.46 ms, p95 4.14 ms (n=30)
+2026-11-24T04:26:39Z   store_totals: p50 0.99 ms, p95 2.03 ms (n=30)
+2026-11-24T04:26:39Z round 2: region=eastasia sku=Standard_B2as_v2
+2026-11-24T04:26:49Z   tcp_connect: p50 4.33 ms, p95 8.36 ms (n=50)
+2026-11-24T04:26:50Z   select_1: p50 1.03 ms, p95 1.39 ms (n=30)
+2026-11-24T04:27:03Z   revenue_by_store: p50 320.4 ms, p95 352.55 ms (n=30)
+2026-11-24T04:27:03Z   top_products: p50 1.33 ms, p95 2.72 ms (n=30)
+2026-11-24T04:27:03Z   minute_window_1d: p50 3.24 ms, p95 7.67 ms (n=30)
+2026-11-24T04:27:03Z   store_totals: p50 1.07 ms, p95 1.72 ms (n=30)
+2026-11-24T04:27:03Z round 3: region=eastasia sku=Standard_B2as_v2
+2026-11-24T04:27:14Z   tcp_connect: p50 4.42 ms, p95 9.0 ms (n=50)
+2026-11-24T04:27:15Z   select_1: p50 0.82 ms, p95 1.67 ms (n=30)
+2026-11-24T04:27:28Z   revenue_by_store: p50 318.15 ms, p95 343.85 ms (n=30)
+2026-11-24T04:27:28Z   top_products: p50 1.64 ms, p95 4.03 ms (n=30)
+2026-11-24T04:27:28Z   minute_window_1d: p50 3.2 ms, p95 7.09 ms (n=30)
+2026-11-24T04:27:28Z   store_totals: p50 1.01 ms, p95 1.18 ms (n=30)
+2026-11-24T04:27:28Z done
