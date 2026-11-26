@@ -40,9 +40,11 @@ QUERIES = {
                         "WHERE run_id = '{run}' GROUP BY store_id",
     "top_products": "SELECT product_id, SUM(total_revenue) AS r FROM sales_by_store_product "
                     "WHERE run_id = '{run}' GROUP BY product_id ORDER BY r DESC LIMIT 10",
+    # first 24 hours of the run's own data, whatever dates the dataset uses
     "minute_window_1d": "SELECT window_start, SUM(total_revenue) FROM sales_by_store_minute "
-                        "WHERE run_id = '{run}' AND window_start >= '2024-01-01' "
-                        "AND window_start < '2024-01-02' GROUP BY window_start ORDER BY window_start",
+                        "WHERE run_id = '{run}' AND window_start < INTERVAL '1 day' + "
+                        "(SELECT MIN(window_start) FROM sales_by_store_minute WHERE run_id = '{run}') "
+                        "GROUP BY window_start ORDER BY window_start",
     "store_totals": "SELECT * FROM sales_by_store WHERE run_id = '{run}'",
 }
 FIELDS = {
@@ -303,6 +305,8 @@ def main() -> int:
     v = sub.choices["volume"]
     v.add_argument("--dir", type=Path, required=True)
     v.add_argument("--prefix", default="bench10")
+    v.add_argument("--skip-chunks", type=int, default=0,
+                   help="skip the first N chunks (already measured by an earlier run in the same evidence folder)")
     r = sub.choices["repeat"]
     r.add_argument("--source", type=Path, required=True)
     r.add_argument("--rows", type=int, required=True)
@@ -320,7 +324,7 @@ def main() -> int:
     if args.mode == "volume":
         summary = json.loads((args.dir / f"{args.prefix}_summary.json").read_text(encoding="utf-8"))
         total_rows = total_bytes = 0
-        for item in summary["chunks"]:
+        for item in summary["chunks"][args.skip_chunks:]:
             source = args.dir / item["file"]
             manifest = json.loads(Path(str(source) + ".manifest.json").read_text(encoding="utf-8"))
             if manifest["raw_file_bytes"] != source.stat().st_size:
