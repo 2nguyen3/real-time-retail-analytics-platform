@@ -1,8 +1,0 @@
-/// Quản lý cửa hàng: chỉ thấy cửa hàng S001 (và doanh thu của nó).
-role 'Store S001'
-	modelPermission: read
-
-	tablePermission Store = [Store ID] = "S001"
-
-	annotation PBI_Id = 3b4ffacc46db440291595f7dc44693b1
-

@@ -1,6 +1,0 @@
-/// Trụ sở: thấy toàn bộ dữ liệu, không lọc hàng.
-role Admin
-	modelPermission: read
-
-	annotation PBI_Id = a418c0285c9e4b088cb6fdd18d58d05a
-
