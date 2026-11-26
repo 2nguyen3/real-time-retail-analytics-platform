@@ -1,4 +1,0 @@
-label,environment,rep,run_id,rows,bytes,publish_wall_s,publish_send_s,publish_rows_per_s,publish_mb_per_s,flink_job_s,flink_rows_per_s,flink_mb_per_s,reconcile_s,end_to_end_s,status,started_utc,job_id
-official,local,1,loc_1_11231118,1000000,447205234,1488.61,739.406,1352.4,0.6,752.83,1328.3,0.59,51.5,2284.56,PASS,2026-11-23T11:18:55Z,7f196824eb0400f63fad55027ffb16ec
-official,local,2,loc_2_11231118,1000000,447205234,973.22,390.859,2558.5,1.14,279.09,3583.1,1.6,19.19,1274.09,PASS,2026-11-23T11:57:56Z,1eea742de873e6f3e0eade6ae450a0c5
-official,local,3,loc_3_11231118,1000000,447205234,431.94,233.953,4274.4,1.91,268.05,3730.6,1.67,17.8,720.59,PASS,2026-11-23T12:19:33Z,76b27b05b157a80bd26d0ed8a2f4cd43

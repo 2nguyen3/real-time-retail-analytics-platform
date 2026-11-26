@@ -1,0 +1,13 @@
+label,environment,rep,run_id,query,samples,p50_ms,p95_ms,max_ms
+official,local,1,sor10_c01_rep1_11260413,revenue_by_store,30,6.03,8.64,8.78
+official,local,1,sor10_c01_rep1_11260413,top_products,30,76.16,94.31,102.11
+official,local,1,sor10_c01_rep1_11260413,minute_window_1d,30,2.26,2.66,2.91
+official,local,1,sor10_c01_rep1_11260413,store_totals,30,0.6,0.86,0.94
+official,local,2,sor10_c01_rep2_11260413,revenue_by_store,30,7.59,12.52,13.65
+official,local,2,sor10_c01_rep2_11260413,top_products,30,114.92,135.7,141.51
+official,local,2,sor10_c01_rep2_11260413,minute_window_1d,30,2.49,3.34,3.95
+official,local,2,sor10_c01_rep2_11260413,store_totals,30,0.62,0.8,0.85
+official,local,3,sor10_c01_rep3_11260413,revenue_by_store,30,7.03,9.16,9.29
+official,local,3,sor10_c01_rep3_11260413,top_products,30,121.84,162.79,167.61
+official,local,3,sor10_c01_rep3_11260413,minute_window_1d,30,2.41,3.25,3.56
+official,local,3,sor10_c01_rep3_11260413,store_totals,30,0.93,1.1,1.45

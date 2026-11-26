@@ -1,0 +1,4 @@
+label,environment,rep,run_id,rows,bytes,publish_wall_s,publish_send_s,publish_rows_per_s,publish_mb_per_s,flink_job_s,flink_rows_per_s,flink_mb_per_s,reconcile_s,end_to_end_s,status,started_utc,job_id
+official,local,1,sor10_c01_rep1_11260413,1000000,588788829,526.3,281.157,3556.7,2.09,347.36,2878.9,1.7,23.2,894.27,PASS,2026-11-26T04:13:53Z,0ebe285874764e7e9ed14af4eda256fb
+official,local,2,sor10_c01_rep2_11260413,1000000,588788829,556.84,298.672,3348.2,1.97,358.56,2788.9,1.64,26.61,935.91,PASS,2026-11-26T04:29:14Z,2f70f6efe308f39793ae30f85f7809eb
+official,local,3,sor10_c01_rep3_11260413,1000000,588788829,489.92,260.188,3843.4,2.26,361.36,2767.3,1.63,28.89,871.14,PASS,2026-11-26T04:45:21Z,14b8a0e1d9710ec98dfda02cd9ebde09

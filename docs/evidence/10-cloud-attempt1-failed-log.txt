@@ -1,5 +1,0 @@
-2026-11-22T05:26:01Z PREFLIGHT PASS (free disk 50 GB)
-2026-11-22T05:26:01Z bench10_c01_11220526: publish 1000000 rows (447205234 bytes)
-2026-11-22T05:39:09Z bench10_c01_11220526: Flink bounded job
-2026-11-22T05:48:11Z bench10_c01_11220526: reconcile with source file
-2026-11-22T05:48:45Z bench10_c01_11220526: FAIL AssertionError: PostgreSQL reconciliation failed: [{'run_id': 'bench10_c01_11220526', 'table': 'sales_by_store', 'expected_rows': 5, 'actual_rows': 5, 'expected_count': 1000000, 'actual_count': 1000000, 'expected_quantity': 3000040, 'actual_quantity': 3000040, 'expected_revenue': '300402326.38', 'actual_revenue': '

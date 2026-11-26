@@ -1,4 +1,0 @@
-run_id,table,expected_rows,actual_rows,expected_count,actual_count,expected_quantity,actual_quantity,expected_revenue,actual_revenue,key_mismatches,status
-bench10_c01_11220526,sales_by_store,5,5,1000000,1000000,3000040,3000040,300402326.38,300402326.38,0,PASS
-bench10_c01_11220526,sales_by_store_product,400,400,1000000,1000000,3000040,3000040,300402326.38,300402326.38,0,PASS
-bench10_c01_11220526,sales_by_store_minute,333334,332877,1000000,998629,3000040,2995953,300402326.38,300004640.70,457,FAIL

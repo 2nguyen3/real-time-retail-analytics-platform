@@ -1,0 +1,3 @@
+transactions_200807.csv csv_bytes=381661274 gz_bytes=41666315 compress_s=5.1
+transactions_200808.csv csv_bytes=381678385 gz_bytes=41554634 compress_s=4.8
+transactions_200809.csv csv_bytes=381017249 gz_bytes=41441386 compress_s=4.8

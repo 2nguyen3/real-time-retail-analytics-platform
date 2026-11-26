@@ -1,0 +1,22 @@
+2026-11-26T06:56:16Z round 1: region=indiasouthcentral sku=Standard_D4as_v4
+2026-11-26T06:56:30Z   tcp_connect: p50 80.09 ms, p95 85.68 ms (n=50)
+2026-11-26T06:56:34Z   select_1: p50 80.22 ms, p95 80.62 ms (n=30)
+2026-11-26T06:57:06Z   revenue_by_store: p50 120.78 ms, p95 123.26 ms (n=30)
+2026-11-26T06:57:06Z   top_products: p50 526.66 ms, p95 563.63 ms (n=30)
+2026-11-26T06:57:06Z   minute_window_1d: p50 81.13 ms, p95 81.65 ms (n=30)
+2026-11-26T06:57:06Z   store_totals: p50 119.36 ms, p95 122.68 ms (n=30)
+2026-11-26T06:57:06Z round 2: region=indiasouthcentral sku=Standard_D4as_v4
+2026-11-26T06:57:21Z   tcp_connect: p50 80.17 ms, p95 83.75 ms (n=50)
+2026-11-26T06:57:25Z   select_1: p50 83.49 ms, p95 83.69 ms (n=30)
+2026-11-26T06:57:57Z   revenue_by_store: p50 121.79 ms, p95 123.98 ms (n=30)
+2026-11-26T06:57:57Z   top_products: p50 523.12 ms, p95 574.16 ms (n=30)
+2026-11-26T06:57:57Z   minute_window_1d: p50 78.41 ms, p95 79.22 ms (n=30)
+2026-11-26T06:57:57Z   store_totals: p50 119.59 ms, p95 120.34 ms (n=30)
+2026-11-26T06:57:57Z round 3: region=indiasouthcentral sku=Standard_D4as_v4
+2026-11-26T06:58:11Z   tcp_connect: p50 80.2 ms, p95 84.08 ms (n=50)
+2026-11-26T06:58:15Z   select_1: p50 74.91 ms, p95 75.89 ms (n=30)
+2026-11-26T06:58:46Z   revenue_by_store: p50 118.16 ms, p95 121.97 ms (n=30)
+2026-11-26T06:58:46Z   top_products: p50 522.81 ms, p95 557.76 ms (n=30)
+2026-11-26T06:58:46Z   minute_window_1d: p50 81.17 ms, p95 81.73 ms (n=30)
+2026-11-26T06:58:46Z   store_totals: p50 111.19 ms, p95 115.3 ms (n=30)
+2026-11-26T06:58:46Z done

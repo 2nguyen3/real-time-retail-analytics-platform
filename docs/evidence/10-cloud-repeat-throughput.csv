@@ -1,4 +1,0 @@
-label,environment,rep,run_id,rows,bytes,publish_wall_s,publish_send_s,publish_rows_per_s,publish_mb_per_s,flink_job_s,flink_rows_per_s,flink_mb_per_s,reconcile_s,end_to_end_s,status,started_utc,job_id
-official,cloud,1,rep_1_11230727,1000000,447205234,780.9,412.856274,2422.2,1.08,469.27,2131.0,0.95,31.58,1270.72,PASS,2026-11-23T07:27:57Z,d8ee5e539e4e1c845bd6619f01c06b7a
-official,cloud,2,rep_2_11230727,1000000,447205234,768.58,408.606084,2447.3,1.09,500.05,1999.8,0.89,31.57,1287.99,PASS,2026-11-23T07:49:53Z,ef26c6b5e3673869072f64a6f3aa8d66
-official,cloud,3,rep_3_11230727,1000000,447205234,779.96,414.155345,2414.6,1.08,488.53,2047.0,0.92,30.73,1290.93,PASS,2026-11-23T08:12:11Z,e3e3ade9e74ce3407fcf6b348494006b
