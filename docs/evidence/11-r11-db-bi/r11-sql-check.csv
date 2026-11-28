@@ -1,0 +1,7 @@
+source,query,match
+tx_detail_v,q1,True
+tx_detail_v,q2,True
+tx_detail_v,q3,True
+agg_store_product,q1,True
+agg_store_product,q2,True
+agg_store_product,q3,True

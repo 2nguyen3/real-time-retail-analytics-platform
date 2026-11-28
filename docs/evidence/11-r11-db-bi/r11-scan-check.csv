@@ -1,0 +1,3 @@
+table,seq_tup_read_before,seq_tup_read_after,queries,table_rows
+tx_detail,5000000,17000000,12,1000000
+agg_store_product,8247252,15860100,12,634404

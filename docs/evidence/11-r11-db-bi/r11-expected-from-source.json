@@ -1,0 +1,114 @@
+{
+  "run_id": "r11_c01",
+  "detail_rows": 1000000,
+  "agg_rows": 634404,
+  "q1": {
+    "transaction_count": 1000000,
+    "total_quantity": 1509672,
+    "total_revenue": "1914614.80"
+  },
+  "q2_top10_products": [
+    [
+      "PRD0904358",
+      "33220.88"
+    ],
+    [
+      "PRD0900121",
+      "20322.26"
+    ],
+    [
+      "PRD0903052",
+      "16378.05"
+    ],
+    [
+      "PRD0901265",
+      "13898.84"
+    ],
+    [
+      "PRD0904250",
+      "8533.23"
+    ],
+    [
+      "PRD0904976",
+      "7750.98"
+    ],
+    [
+      "PRD0900173",
+      "7258.23"
+    ],
+    [
+      "PRD0900830",
+      "7142.11"
+    ],
+    [
+      "PRD0901923",
+      "7082.28"
+    ],
+    [
+      "PRD0903377",
+      "6786.00"
+    ]
+  ],
+  "q3_top10_stores": [
+    [
+      "STORE02357",
+      "10599.53"
+    ],
+    [
+      "STORE01758",
+      "7730.40"
+    ],
+    [
+      "STORE00696",
+      "7438.91"
+    ],
+    [
+      "STORE01423",
+      "7190.48"
+    ],
+    [
+      "STORE00729",
+      "6948.22"
+    ],
+    [
+      "STORE02504",
+      "6836.17"
+    ],
+    [
+      "STORE02206",
+      "6680.91"
+    ],
+    [
+      "STORE00343",
+      "6537.28"
+    ],
+    [
+      "STORE00829",
+      "6489.64"
+    ],
+    [
+      "STORE01526",
+      "6456.15"
+    ]
+  ],
+  "detail_columns": [
+    "run_id",
+    "transaction_id",
+    "store_id",
+    "product_id",
+    "quantity",
+    "price",
+    "line_revenue",
+    "currency",
+    "event_time"
+  ],
+  "agg_columns": [
+    "run_id",
+    "store_id",
+    "product_id",
+    "currency",
+    "transaction_count",
+    "total_quantity",
+    "total_revenue"
+  ]
+}

@@ -1,0 +1,3 @@
+table,rows,table_bytes,index_bytes,total_bytes
+tx_detail,1000000,195248128,197500928,392749056
+agg_store_product,634404,59555840,43614208,103170048
