@@ -1,0 +1,175 @@
+2026-11-26T04:11:51Z sor10_c01_rep1_11260411: publish 1000000 rows (588788829 bytes)
+2026-11-26T04:25:15Z sor10_c01_rep1_11260411: Flink bounded job
+2026-11-26T04:33:32Z sor10_c01_rep1_11260411: reconcile with source file
+2026-11-26T04:34:07Z sor10_c01_rep1_11260411: query latency (30 runs per query)
+2026-11-26T04:34:19Z sor10_c01_rep1_11260411: PASS publish 2754.5 rows/s, flink 2074.2 rows/s
+2026-11-26T05:19:51Z sor10_c02_11260519: publish 1000000 rows (588648911 bytes)
+2026-11-26T05:33:00Z sor10_c02_11260519: Flink bounded job
+2026-11-26T05:41:25Z sor10_c02_11260519: reconcile with source file
+2026-11-26T05:42:03Z sor10_c02_11260519: query latency (30 runs per query)
+2026-11-26T05:42:23Z sor10_c02_11260519: PASS publish 2784.0 rows/s, flink 2033.9 rows/s
+2026-11-26T05:42:25Z sor10_c03_11260519: publish 1000000 rows (588719954 bytes)
+2026-11-26T05:55:08Z sor10_c03_11260519: Flink bounded job
+2026-11-26T06:03:29Z sor10_c03_11260519: reconcile with source file
+2026-11-26T06:04:04Z sor10_c03_11260519: query latency (30 runs per query)
+2026-11-26T06:04:24Z sor10_c03_11260519: PASS publish 2748.1 rows/s, flink 2051.8 rows/s
+2026-11-26T06:04:24Z sor10_c04_11260519: publish 1000000 rows (588754019 bytes)
+2026-11-26T06:17:42Z sor10_c04_11260519: Flink bounded job
+2026-11-26T06:26:07Z sor10_c04_11260519: reconcile with source file
+2026-11-26T06:26:44Z sor10_c04_11260519: query latency (30 runs per query)
+2026-11-26T06:27:03Z sor10_c04_11260519: PASS publish 2797.3 rows/s, flink 2043.2 rows/s
+2026-11-26T06:27:03Z sor10_c05_11260519: publish 1000000 rows (588649899 bytes)
+2026-11-26T06:40:16Z sor10_c05_11260519: Flink bounded job
+2026-11-26T06:48:42Z sor10_c05_11260519: reconcile with source file
+2026-11-26T06:49:16Z sor10_c05_11260519: query latency (30 runs per query)
+2026-11-26T06:49:35Z sor10_c05_11260519: PASS publish 2800.4 rows/s, flink 2038.9 rows/s
+2026-11-26T17:27:00Z sor10_c06_11261727: publish 1000000 rows (588747075 bytes)
+2026-11-26T17:40:54Z sor10_c06_11261727: Flink bounded job
+2026-11-26T17:50:04Z sor10_c06_11261727: reconcile with source file
+2026-11-26T17:50:44Z sor10_c06_11261727: query latency (30 runs per query)
+2026-11-26T17:51:06Z sor10_c06_11261727: PASS publish 2526.2 rows/s, flink 1873.4 rows/s
+2026-11-26T17:51:06Z sor10_c07_11261727: publish 1000000 rows (588673721 bytes)
+2026-11-26T18:05:46Z sor10_c07_11261727: Flink bounded job
+2026-11-26T18:15:15Z sor10_c07_11261727: reconcile with source file
+2026-11-26T18:15:58Z sor10_c07_11261727: query latency (30 runs per query)
+2026-11-26T18:16:21Z sor10_c07_11261727: PASS publish 2513.1 rows/s, flink 1810.2 rows/s
+2026-11-26T18:16:23Z sor10_c08_11261727: publish 1000000 rows (588633545 bytes)
+2026-11-26T18:30:53Z sor10_c08_11261727: Flink bounded job
+2026-11-26T18:40:18Z sor10_c08_11261727: reconcile with source file
+2026-11-26T18:40:58Z sor10_c08_11261727: query latency (30 runs per query)
+2026-11-26T18:41:20Z sor10_c08_11261727: PASS publish 2553.0 rows/s, flink 1822.5 rows/s
+2026-11-26T18:41:20Z sor10_c09_11261727: publish 1000000 rows (588759338 bytes)
+2026-11-26T18:55:43Z sor10_c09_11261727: Flink bounded job
+2026-11-26T19:04:57Z sor10_c09_11261727: reconcile with source file
+2026-11-26T19:05:37Z sor10_c09_11261727: query latency (30 runs per query)
+2026-11-26T19:06:01Z sor10_c09_11261727: PASS publish 2539.1 rows/s, flink 1854.6 rows/s
+2026-11-26T19:06:01Z sor10_c10_11261727: publish 1000000 rows (588645072 bytes)
+2026-11-26T19:20:34Z sor10_c10_11261727: Flink bounded job
+2026-11-26T19:30:00Z sor10_c10_11261727: reconcile with source file
+2026-11-26T19:30:40Z sor10_c10_11261727: query latency (30 runs per query)
+2026-11-26T19:31:03Z sor10_c10_11261727: PASS publish 2519.4 rows/s, flink 1819.4 rows/s
+2026-11-26T19:31:03Z sor10_c11_11261727: publish 1000000 rows (588723304 bytes)
+2026-11-26T19:45:00Z sor10_c11_11261727: Flink bounded job
+2026-11-26T19:54:05Z sor10_c11_11261727: reconcile with source file
+2026-11-26T19:54:44Z sor10_c11_11261727: query latency (30 runs per query)
+2026-11-26T19:55:06Z sor10_c11_11261727: PASS publish 2550.1 rows/s, flink 1892.1 rows/s
+2026-11-26T19:55:06Z sor10_c12_11261727: publish 1000000 rows (588715050 bytes)
+2026-11-26T20:09:38Z sor10_c12_11261727: Flink bounded job
+2026-11-26T20:18:41Z sor10_c12_11261727: reconcile with source file
+2026-11-26T20:19:20Z sor10_c12_11261727: query latency (30 runs per query)
+2026-11-26T20:19:45Z sor10_c12_11261727: PASS publish 2533.0 rows/s, flink 1896.7 rows/s
+2026-11-26T20:19:45Z sor10_c13_11261727: publish 1000000 rows (588639558 bytes)
+2026-11-26T20:34:15Z sor10_c13_11261727: Flink bounded job
+2026-11-26T20:43:30Z sor10_c13_11261727: reconcile with source file
+2026-11-26T20:44:10Z sor10_c13_11261727: query latency (30 runs per query)
+2026-11-26T20:44:33Z sor10_c13_11261727: PASS publish 2514.4 rows/s, flink 1858.0 rows/s
+2026-11-26T20:44:33Z sor10_c14_11261727: publish 1000000 rows (588790391 bytes)
+2026-11-26T20:58:32Z sor10_c14_11261727: Flink bounded job
+2026-11-26T21:07:49Z sor10_c14_11261727: reconcile with source file
+2026-11-26T21:08:28Z sor10_c14_11261727: query latency (30 runs per query)
+2026-11-26T21:08:50Z sor10_c14_11261727: PASS publish 2520.0 rows/s, flink 1849.4 rows/s
+2026-11-26T21:08:50Z sor10_c15_11261727: publish 1000000 rows (588694951 bytes)
+2026-11-26T21:23:22Z sor10_c15_11261727: Flink bounded job
+2026-11-26T21:32:34Z sor10_c15_11261727: reconcile with source file
+2026-11-26T21:33:14Z sor10_c15_11261727: query latency (30 runs per query)
+2026-11-26T21:33:41Z sor10_c15_11261727: PASS publish 2526.3 rows/s, flink 1863.9 rows/s
+2026-11-26T21:33:41Z sor10_c16_11261727: publish 1000000 rows (588719590 bytes)
+2026-11-26T21:47:58Z sor10_c16_11261727: Flink bounded job
+2026-11-26T21:57:13Z sor10_c16_11261727: reconcile with source file
+2026-11-26T21:57:51Z sor10_c16_11261727: query latency (30 runs per query)
+2026-11-26T21:58:16Z sor10_c16_11261727: PASS publish 2556.3 rows/s, flink 1858.6 rows/s
+2026-11-26T21:58:17Z sor10_c17_11261727: publish 1000000 rows (588728328 bytes)
+2026-11-26T22:12:51Z sor10_c17_11261727: Flink bounded job
+2026-11-26T22:21:54Z sor10_c17_11261727: reconcile with source file
+2026-11-26T22:22:33Z sor10_c17_11261727: query latency (30 runs per query)
+2026-11-26T22:22:55Z sor10_c17_11261727: PASS publish 2523.1 rows/s, flink 1896.1 rows/s
+2026-11-26T22:22:55Z sor10_c18_11261727: publish 1000000 rows (588646466 bytes)
+2026-11-26T22:37:13Z sor10_c18_11261727: Flink bounded job
+2026-11-26T22:46:37Z sor10_c18_11261727: reconcile with source file
+2026-11-26T22:47:18Z sor10_c18_11261727: query latency (30 runs per query)
+2026-11-26T22:47:40Z sor10_c18_11261727: PASS publish 2554.9 rows/s, flink 1824.8 rows/s
+2026-11-26T22:47:40Z sor10_c19_11261727: publish 1000000 rows (588736812 bytes)
+2026-11-26T23:01:40Z sor10_c19_11261727: Flink bounded job
+2026-11-26T23:11:00Z sor10_c19_11261727: reconcile with source file
+2026-11-26T23:11:39Z sor10_c19_11261727: query latency (30 runs per query)
+2026-11-26T23:12:01Z sor10_c19_11261727: PASS publish 2539.5 rows/s, flink 1834.3 rows/s
+2026-11-26T23:12:01Z sor10_c20_11261727: publish 1000000 rows (588695738 bytes)
+2026-11-26T23:26:22Z sor10_c20_11261727: Flink bounded job
+2026-11-26T23:35:51Z sor10_c20_11261727: reconcile with source file
+2026-11-26T23:36:32Z sor10_c20_11261727: query latency (30 runs per query)
+2026-11-26T23:37:00Z sor10_c20_11261727: PASS publish 2536.3 rows/s, flink 1804.5 rows/s
+2026-11-26T23:37:01Z sor10_c21_11261727: publish 1000000 rows (588667482 bytes)
+2026-11-26T23:51:19Z sor10_c21_11261727: Flink bounded job
+2026-11-27T00:00:35Z sor10_c21_11261727: reconcile with source file
+2026-11-27T00:01:16Z sor10_c21_11261727: query latency (30 runs per query)
+2026-11-27T00:01:39Z sor10_c21_11261727: PASS publish 2560.2 rows/s, flink 1851.4 rows/s
+2026-11-27T00:01:39Z sor10_c22_11261727: publish 1000000 rows (588753437 bytes)
+2026-11-27T00:15:31Z sor10_c22_11261727: Flink bounded job
+2026-11-27T00:24:45Z sor10_c22_11261727: reconcile with source file
+2026-11-27T00:25:24Z sor10_c22_11261727: query latency (30 runs per query)
+2026-11-27T00:25:48Z sor10_c22_11261727: PASS publish 2548.8 rows/s, flink 1856.1 rows/s
+2026-11-27T00:25:48Z sor10_c23_11261727: publish 1000000 rows (588684150 bytes)
+2026-11-27T00:40:06Z sor10_c23_11261727: Flink bounded job
+2026-11-27T00:49:22Z sor10_c23_11261727: reconcile with source file
+2026-11-27T00:50:01Z sor10_c23_11261727: query latency (30 runs per query)
+2026-11-27T00:50:25Z sor10_c23_11261727: PASS publish 2568.3 rows/s, flink 1847.1 rows/s
+2026-11-27T00:50:25Z sor10_c24_11261727: publish 1000000 rows (588732717 bytes)
+2026-11-27T01:04:52Z sor10_c24_11261727: Flink bounded job
+2026-11-27T01:14:11Z sor10_c24_11261727: reconcile with source file
+2026-11-27T01:14:50Z sor10_c24_11261727: query latency (30 runs per query)
+2026-11-27T01:15:14Z sor10_c24_11261727: PASS publish 2553.9 rows/s, flink 1841.4 rows/s
+2026-11-27T01:15:15Z sor10_c25_11261727: publish 1000000 rows (588712873 bytes)
+2026-11-27T01:29:26Z sor10_c25_11261727: Flink bounded job
+2026-11-27T01:38:51Z sor10_c25_11261727: reconcile with source file
+2026-11-27T01:39:37Z sor10_c25_11261727: query latency (30 runs per query)
+2026-11-27T01:40:09Z sor10_c25_11261727: PASS publish 2533.8 rows/s, flink 1819.8 rows/s
+2026-11-27T01:40:09Z sor10_c26_11261727: publish 1000000 rows (588618551 bytes)
+2026-11-27T01:54:34Z sor10_c26_11261727: Flink bounded job
+2026-11-27T02:04:04Z sor10_c26_11261727: reconcile with source file
+2026-11-27T02:04:45Z sor10_c26_11261727: query latency (30 runs per query)
+2026-11-27T02:05:11Z sor10_c26_11261727: PASS publish 2527.5 rows/s, flink 1800.4 rows/s
+2026-11-27T03:08:33Z sor10_c27_11270308: publish 1000000 rows (588769121 bytes)
+2026-11-27T03:21:39Z sor10_c27_11270308: Flink bounded job
+2026-11-27T03:29:46Z sor10_c27_11270308: reconcile with source file
+2026-11-27T03:30:21Z sor10_c27_11270308: query latency (30 runs per query)
+2026-11-27T03:30:41Z sor10_c27_11270308: PASS publish 2732.1 rows/s, flink 2125.2 rows/s
+2026-11-27T03:30:42Z sor10_c28_11270308: publish 1000000 rows (588680709 bytes)
+2026-11-27T03:43:56Z sor10_c28_11270308: Flink bounded job
+2026-11-27T03:52:10Z sor10_c28_11270308: reconcile with source file
+2026-11-27T03:52:44Z sor10_c28_11270308: query latency (30 runs per query)
+2026-11-27T03:53:02Z sor10_c28_11270308: PASS publish 2768.5 rows/s, flink 2087.3 rows/s
+2026-11-27T03:53:02Z sor10_c29_11270308: publish 1000000 rows (588718516 bytes)
+2026-11-27T04:06:28Z sor10_c29_11270308: Flink bounded job
+2026-11-27T04:14:43Z sor10_c29_11270308: reconcile with source file
+2026-11-27T04:15:18Z sor10_c29_11270308: query latency (30 runs per query)
+2026-11-27T04:15:37Z sor10_c29_11270308: PASS publish 2733.2 rows/s, flink 2082.1 rows/s
+2026-11-27T04:15:37Z sor10_c30_11270308: publish 1000000 rows (588708801 bytes)
+2026-11-27T04:28:37Z sor10_c30_11270308: Flink bounded job
+2026-11-27T04:36:44Z sor10_c30_11270308: reconcile with source file
+2026-11-27T04:37:18Z sor10_c30_11270308: query latency (30 runs per query)
+2026-11-27T04:37:37Z sor10_c30_11270308: PASS publish 2717.7 rows/s, flink 2114.2 rows/s
+2026-11-27T04:37:37Z sor10_c31_11270308: publish 1000000 rows (588623362 bytes)
+2026-11-27T04:50:51Z sor10_c31_11270308: Flink bounded job
+2026-11-27T04:59:04Z sor10_c31_11270308: reconcile with source file
+2026-11-27T04:59:38Z sor10_c31_11270308: query latency (30 runs per query)
+2026-11-27T05:00:03Z sor10_c31_11270308: PASS publish 2770.9 rows/s, flink 2089.5 rows/s
+2026-11-27T05:00:03Z sor10_c32_11270308: publish 1000000 rows (588760189 bytes)
+2026-11-27T05:13:44Z sor10_c32_11270308: Flink bounded job
+2026-11-27T05:21:53Z sor10_c32_11270308: reconcile with source file
+2026-11-27T05:22:29Z sor10_c32_11270308: query latency (30 runs per query)
+2026-11-27T05:22:49Z sor10_c32_11270308: PASS publish 2733.0 rows/s, flink 2108.7 rows/s
+2026-11-27T05:22:49Z sor10_c33_11270308: publish 1000000 rows (588689461 bytes)
+2026-11-27T05:36:03Z sor10_c33_11270308: Flink bounded job
+2026-11-27T05:44:19Z sor10_c33_11270308: reconcile with source file
+2026-11-27T05:44:54Z sor10_c33_11270308: query latency (30 runs per query)
+2026-11-27T05:45:13Z sor10_c33_11270308: PASS publish 2720.8 rows/s, flink 2080.9 rows/s
+2026-11-27T05:45:13Z sor10_c34_11270308: publish 1000000 rows (588701881 bytes)
+2026-11-27T05:58:40Z sor10_c34_11270308: Flink bounded job
+2026-11-27T06:07:11Z sor10_c34_11270308: reconcile with source file
+2026-11-27T06:07:46Z sor10_c34_11270308: query latency (30 runs per query)
+2026-11-27T06:08:07Z sor10_c34_11270308: PASS publish 2745.0 rows/s, flink 2015.6 rows/s
+2026-11-27T06:08:07Z sor10_c35_11270308: publish 802918 rows (472658347 bytes)
+2026-11-27T06:18:37Z sor10_c35_11270308: Flink bounded job
+2026-11-27T06:24:57Z sor10_c35_11270308: reconcile with source file
+2026-11-27T06:25:26Z sor10_c35_11270308: query latency (30 runs per query)
+2026-11-27T06:25:42Z sor10_c35_11270308: PASS publish 2756.4 rows/s, flink 2194.0 rows/s

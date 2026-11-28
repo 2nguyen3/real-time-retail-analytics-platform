@@ -7,3 +7,8 @@
 - Số 75 251 lấy từ tổng `transaction_count` trong PostgreSQL sau khi Producer đã dừng; đối soát khớp từng khóa với đúng số dòng đầu này của tệp nguồn. Chưa lưu bản in JSON của Producer.
 - Sau đối soát, dữ liệu `demo_rt_01` đã được xóa để dùng lại mã lượt chạy.
 - Chưa đo độ trễ đầu-cuối; thư mục này không phải minh chứng cho R14.
+
+## Lượt chạy khi quay video (27/11/2026)
+
+- Cùng luồng, mã lượt `demo_rt_01`; Producer dừng sau 27 115 giao dịch.
+- Kết quả đối soát trong `demo_recorded_reconcile.csv`: cả ba bảng PASS, 0 khóa lệch. Bảng theo cửa sổ thời gian chỉ so cửa sổ đã đóng: 16 423 giao dịch.

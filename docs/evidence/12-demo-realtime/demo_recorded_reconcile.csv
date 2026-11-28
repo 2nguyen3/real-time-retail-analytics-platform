@@ -1,0 +1,4 @@
+run_id,table,expected_rows,actual_rows,expected_count,actual_count,expected_quantity,actual_quantity,expected_revenue,actual_revenue,key_mismatches,status
+demo_rt_01,sales_by_store,752,752,27115,27115,43820,43820,51992.59,51992.59,0,PASS
+demo_rt_01,sales_by_store_product,25646,25646,27115,27115,43820,43820,51992.59,51992.59,0,PASS
+demo_rt_01,sales_by_store_minute,733,733,16423,16423,26665,26665,31180.71,31180.71,0,PASS

@@ -41,7 +41,7 @@ Tốc độ Flink đã gồm ghi PostgreSQL.
 - Với hai cấu hình này, local nhanh hơn (trung vị: gửi khoảng 29%, Flink khoảng 36%) và truy vấn có độ trễ thấp hơn. Azure ổn định hơn (ba lượt chênh khoảng 1%).
 - Hai bên khác phần cứng và vị trí PostgreSQL, nên không kết luận cloud luôn chậm hơn.
 - CPU toàn máy của VM trung bình khoảng 49%, nên tổng CPU không phải điểm nghẽn. Parallelism 1 và ghi PostgreSQL qua mạng là nguyên nhân có thể, chưa kiểm chứng riêng.
-- So sánh trên một đợt (khoảng 0,13 GiB CSV gốc). Quy mô đầy đủ chỉ chạy trên Azure: đã xong đợt 1–5 (`azure/10-throughput-runs.csv`), tạm dừng, còn đợt 6–35.
+- So sánh trên một đợt (khoảng 0,13 GiB CSV gốc). Quy mô đầy đủ (35 đợt) chỉ chạy trên Azure, kết quả ở `azure-35-dot/README.md`.
 
 ## 5. Tệp nguồn
 
